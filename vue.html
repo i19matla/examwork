@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 Vue pilot application</title>
+    <link rel="stylesheet" href="examstyling.css">
+    <!-- varför fungerar denna cdn men inte den under denna närmast härunder? -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- <script src="https://unpkg.com/vue-chartjs@3.3.0/dist/vue-chartjs.min.js"></script> -->
+    <!-- Lägg till en Vue  v3.3.0-alpha.4. cdn här -->
+    <!-- VUE VUE VUE VUE VUE VUE VUE VUE VUE -->
+</head>
+<body>
+    <header>
+        <h1>Vue Vue Vue Vue Vue Vue Vue </h1>
+    </header>
+    <main>
+        <section id="webShopApp">
+            <item-in-shop v-for="(component, loopNr) in amountOfComponents" :key="loopNr" :loop-nr="loopNr" />
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script>
+        let minApp = Vue.createApp({
+            data() {
+                return {
+                    amountOfComponents: 200,
+                }
+            },
+            components: ["item-in-shop"]
+        });
+
+        minApp.component('pop-up-change-dataset', {
+            
+        });
+
+        minApp.component('item-in-shop', {
+            template: `
+                <div class="itemContainer">
+                    <h2>{{ itemHeading[0] }} {{ loopNr + 1 }} {{evenOdd(loopNr)}}</h2>
+                    <figure>
+                        <img :src="imageSetter(loopNr)" :alt="imgAltText" width="200" height="280">
+                        <figcaption>
+                            {{ itemImageText }}
+                        </figcaption>
+                    </figure>
+                    <p class="price">{{ itemPrice }} {{ currency }}</p>
+                    <p class="itemDescr">{{ itemDescription }}</p>
+                </div>
+            `,
+            props: {
+                loopNr: {
+                    type: Number,
+                    required: true,
+                },
+            },
+            data() {
+                return {
+                    itemHeading: ["Produktrubrik",],
+                    imgSrcUrl: "pictures/hooveringflow.jpg",
+                    imgAltText: "Text som visas om inte bilden kan visas.",
+                    itemImageText: "En bildtext under bilden.",
+                    itemPrice: 99,
+                    currency: "Kr",
+                    itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, quod!"
+                }
+            },
+            methods: {
+                imageSetter(i) {
+                    let imageToPrint = "";
+                    if (i % 2 === 0) {
+                        imageToPrint = "pictures/hooveringflow.jpg";
+                    } else {
+                        imageToPrint = "pictures/itemimage.jpg";
+                    }
+                    return imageToPrint;
+                },
+                evenOdd(i) {
+                    var printText = "This should be printed";
+                    if (i % 2 === 0) {
+                        printText = "Siffran är ojämn"
+                    } else {
+                        printText = "Siffran är jämn"
+                    }
+                    return printText;
+                }
+            }
+        });
+
+        minApp.mount('#webShopApp');
+
+    </script>
+</body>
+</html>
