@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Vue pilot application</title>
+    <title>Vue pilot study.html</title>
     <link rel="stylesheet" href="examstyling.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="vue 3 2 29.js"></script>
+    <script src="measurevuejquery.js"></script>
 </head>
 <body>
-    
-    <script src="01randomizedData200.js"></script> <!-- Variablename: datasetOne200 -->
-    <script src="02randomizedData200.js"></script> <!-- Variablename: datasetTwo200 -->
+    <script src="randomizedOne.js"></script>
+    <script src="randomizedTwo.js"></script>
     <script>
         let minApp = Vue.createApp({
             template: `
@@ -20,6 +20,7 @@
                 <div id="buttonArea">
                     <button id="buttonSetTwo" @click="changeToDataSetTwo()">Byt till: Dataset två</button>
                     <button id="buttonSetOne" @click="changeToDataSetOne()">Byt till: Dataset ett</button>
+                    <button @click="deleteAndRestart()">Töm localstorage och gör ny mätserie</button>
                 </div>
             </header>
             <main>
@@ -40,9 +41,6 @@
                     </div>
                 </section>
             </main>
-            <footer>
-
-            </footer>
             `,
             data() {
                 return {
@@ -53,24 +51,22 @@
             },
             methods: {
                 changeToDataSetTwo() {
-                    localStorage.setItem("vueTimeOne", Date.now());
-                    window.location.href = "http://127.0.0.1:5501/vue200.html?dataset=datasetTwo200";
+                    window.location.href = "http://127.0.0.1:5500/vue200.html?dataset=datasetTwo200";
                 },
                 changeToDataSetOne() {
-                    localStorage.setItem("vueTimeOne", Date.now());
-                    window.location.href = "http://127.0.0.1:5501/vue200.html?dataset=datasetOne200";
+                    window.location.href = "http://127.0.0.1:5500/vue200.html?dataset=datasetOne200";
+                },
+                deleteAndRestart() {
+                    localStorage.clear();
                 }
             },
             beforeCreate() {
-                const urlSearchParams = new URLSearchParams(window.location.search);
-                const parameters = Object.fromEntries(urlSearchParams.entries());
-                console.log(parameters.dataset);
-                if (window.location.href == "http://127.0.0.1:5501/vue200.html" || window.location.href == "http://127.0.0.1:5501/vue200.html?dataset=datasetOne200") {
-                    this.activeHeaderHeading = 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett';
-                    this.theDataSet = datasetOne200;
-               } else if (window.location.href == "http://127.0.0.1:5501/vue200.html?dataset=datasetTwo200") {
+                if (window.location.href.search("datasetOne200") == -1) {
                     this.activeHeaderHeading = 'Vue-Dataset-Två | Vue-Dataset-Två | Vue-Dataset-Två';
                     this.theDataSet = datasetTwo200;
+                } else {
+                    this.activeHeaderHeading = 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett';
+                    this.theDataSet = datasetOne200;
                 }
                 this.theLength = datasetOne200.length;
             },
