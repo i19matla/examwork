@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 jQuery pilot application</title>
+    <link rel="stylesheet" href="examstyling.css">
+    <!-- Denna är den senast tillgänliga versionen av jQuery, så färsk att inte ens google har den i sitt api bibliotek i skrivande stund måndag 2023-03-13 -->
+    <!-- Gå in här för att se, https://code.jquery.com/jquery-3.6.4.js (exakt samma adress som i cdn importen nedan) i en kommentar står att den är släppt 2023-03-08 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <!-- jQuery jQuery jQuery jQuery jQuery jQuery jQuery jQuery jQuery  -->
+</head>
+<body>
+    <header>
+        <h1>jQuery jQuery jQuery jQuery jQuery jQuery </h1>
+    </header>
+    <main>
+        <section id="webShopApp">
+            
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script>
+        var itemHeading = "Produktrubrik";
+        var imgAltText = "Text som visas om inte bilden kan visas.";
+        var itemImageText = "En bildtext under bilden.";
+        var itemPrice = 99;
+        var currency = "Kr";
+        var itemDescription = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, quod!";
+        // Lägg till document ready grejen.
+        for (let i = 0; i < 200; i++) {
+            $($("#webShopApp")).append(
+                `
+                    <div class="itemContainer">
+                        <h2>${ itemHeading } ${i + 1} ${evenOdd(i)}</h2>
+                        <figure>
+                            <img src="${imageSetter(i)}" alt="${imgAltText}" width="200" height="280">
+                            <figcaption>
+                                ${itemImageText}
+                            </figcaption>
+                        </figure>
+                        <p class="price">${itemPrice} ${currency}</p>
+                        <p class="itemDescr">${itemDescription }</p>
+                    </div>
+                `
+            );
+        }
+        function imageSetter(i) {
+            let imageToPrint = "";
+            if (i % 2 === 0) {
+                imageToPrint = "pictures/hooveringflow.jpg";
+            } else {
+                imageToPrint = "pictures/itemimage.jpg";
+            }
+            return imageToPrint;
+        }
+
+        function evenOdd(i) {
+            var printText = "This should be printed";
+            if (i % 2 === 0) {
+                printText = "Siffran är ojämn"
+            } else {
+                printText = "Siffran är jämn"
+            }
+            return printText;
+        }
+    </script>
+</body>
+</html>
