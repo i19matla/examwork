@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>05 jQuery pilot application</title>
+    <title>jquery200.html</title>
     <link rel="stylesheet" href="examstyling.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-    <script src="workingMeasureexperiment.js"></script>
+
+    <script src="01randomizedData200.js"></script> <!-- Variablename datasetOne200; -->
+    <script src="02randomizedData200.js"></script> <!-- Variablename datasetTwo200; -->
 </head>
 <body>
     <header>
-        <div id="buttonArea">
-            <button id="buttonSetTwo" onclick="changeToDataSetTwo()">Byt till: Dataset två</button>
-            <button id="buttonSetOne" onclick="changeToDataSetOne()">Byt till: Dataset ett</button>
-        </div>
+        
     </header>
     <main>
         <section id="webShopApp">
@@ -24,58 +23,72 @@
     <footer>
 
     </footer>
-    <script src="01randomizedData2000.js"></script>
-    <script src="02randomizedData2000.js"></script>
+    <script src="01randomizedData200.js"></script>
+    <script src="02randomizedData200.js"></script>
     <script>
-        localStorage.setItem("timeBeforCreate", Date.now());
-        var amountOfItems = datasetOne2000.length;        
+        var originalUrl = "http://127.0.0.1:5501/jquery200.html?";
+        var dataset = [];
+        var header;
+        console.log(window.location.href);
+        if (window.location.href == "http://127.0.0.1:5501/jquery200.html") {
+            window.location.href = "http://127.0.0.1:5501/jquery200.html?dataset=datasetOne200";
+        } else {
+            //
+        }
 
+        const currentUrl = window.location.href;
+        const parametersUrl = new URL(currentUrl).searchParams;
+        const parameters = new URLSearchParams(parametersUrl).values();
+        const urlParameters = Array.from(parameters);
+        console.log(urlParameters);
+
+        if (urlParameters[0] == "datasetOne200") {
+            dataset = datasetOne200;
+            header = "jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett";
+        } else if (urlParameters[0] == "datasetTwo200") {
+            dataset = datasetTwo200;
+            header = "jQuery-Dataset-Två | jQuery-Dataset-Två | jQuery-Dataset-Två";
+        } else {
+            header = "Något har gått fel.";
+        }
+
+        // var datasetOne200 imported
+        // var datasetTwo200 imported
+        var amountOfItems = datasetOne200.length;        
         
-        $("header").prepend(`<h1 id="overAllHeader">jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett</h1>`);
+        $("header").append(`
+            <h1 id="overAllHeader">${header}</h1>
+            <div id="buttonArea">
+                <button id="buttonSetTwo" onclick="changeToDataSetTwo()">Byt till: Dataset två</button>
+                <button id="buttonSetOne" onclick="changeToDataSetOne()">Byt till: Dataset ett</button>
+            </div>    
+        `);
                 
         for (let i = 0; i < amountOfItems; i++) {
             $("#webShopApp").append(
                 `
                     <div class="itemContainer">
-                        <h2 id="itemHeading${i}">${ datasetOne2000[i].itemHeading }</h2>
+                        <h2 id="itemHeading${i}">${ dataset[i].itemHeading }</h2>
                         <figure>
-                            <img id="itemImg${i}" src="${datasetOne2000[i].image.imgSrcUrl}" alt="${datasetOne2000[i].image.imgAltText}" width="200" height="280" title="Vacker bild dataset 1">
+                            <img id="itemImg${i}" src="${dataset[i].image.imgSrcUrl}" alt="${dataset[i].image.imgAltText}" width="200" height="280" title="Vacker bild dataset 1">
                             <figcaption id="itemFigText${i}">
-                                ${datasetOne2000[i].image.itemImageText}
+                                ${dataset[i].image.itemImageText}
                             </figcaption>
                         </figure>
-                        <p id="itemPrice${i}" class="price">${datasetOne2000[i].itemPrice} ${datasetOne2000[i].currency}</p>
-                        <p id="itemDescr${i}" class="itemDescr">${datasetOne2000[i].itemDescription}</p>
-                        <small id="artNr${i}">Artikel "${datasetOne2000[i].articleNr}"</small>
+                        <p id="itemPrice${i}" class="price">${dataset[i].itemPrice} ${dataset[i].currency}</p>
+                        <p id="itemDescr${i}" class="itemDescr">${dataset[i].itemDescription}</p>
+                        <small id="artNr${i}">Artikel "${dataset[i].articleNr}"</small>
                     </div>
                 `
             );
         }
-
         function changeToDataSetTwo() {
-            $(`#overAllHeader`).text("jQuery-Dataset-Två | jQuery-Dataset-Två | jQuery-Dataset-Två");
-            for (let i = 0; i < amountOfItems; i++) {
-                $(`#itemHeading${i}`).text(datasetTwo2000[i].itemHeading );
-                $(`#itemImg${i}`).attr({ "src" : datasetTwo2000[i].image.imgSrcUrl, "alt": datasetTwo2000[i].image.imgAltText, "title" : "Vacker bild dataset 2" });
-                $(`#itemFigText${i}`).text(datasetTwo2000[i].image.itemImageText);
-                $(`#itemPrice${i}`).text(datasetTwo2000[i].itemPrice + " " + datasetTwo2000[i].currency);
-                $(`#itemDescr${i}`).text(datasetTwo2000[i].itemDescription);
-                $(`#artNr${i}`).text("Artikel \"" + datasetTwo2000[i].articleNr+"\"");
-            }
+            window.location.href = originalUrl + "dataset=datasetTwo200";
         }
 
         function changeToDataSetOne() {
-            $(`#overAllHeader`).text("jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett");
-            for (let i = 0; i < amountOfItems; i++) {
-                $(`#itemHeading${i}`).text(datasetOne2000[i].itemHeading );
-                $(`#itemImg${i}`).attr({ "src" : datasetOne2000[i].image.imgSrcUrl, "alt": datasetOne2000[i].image.imgAltText, "title" : "Vacker bild dataset 2" });
-                $(`#itemFigText${i}`).text(datasetOne2000[i].image.itemImageText);
-                $(`#itemPrice${i}`).text(datasetOne2000[i].itemPrice + " " + datasetOne2000[i].currency);
-                $(`#itemDescr${i}`).text(datasetOne2000[i].itemDescription);
-                $(`#artNr${i}`).text("Artikel \"" + datasetOne2000[i].articleNr+"\"");
-            }
+            window.location.href = originalUrl + "dataset=datasetOne200";
         }
-
         
     </script>
 </body>
