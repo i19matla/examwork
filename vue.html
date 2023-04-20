@@ -9,6 +9,8 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
+    <script src="dataset1.js"></script>
+    <script src="dataset2.js"></script>
     <script>
         let minApp = Vue.createApp({
             template: `
@@ -24,16 +26,16 @@
                 <section id="webShopApp">
                     <div v-for="(component, loopNr) in amountOfComponents" :key="loopNr">
                         <div class="itemContainer">
-                            <h2>{{ activeHeading[this.itemNr[loopNr]] }}</h2>
+                            <h2>{{ data[this.itemNr[loopNr]].itemHeading }}</h2>
                             <figure>
-                                <img :src="activeImgSrc[itemNr[loopNr]]" :alt="activeImgAlt[itemNr[loopNr]]" width="200" height="280">
+                                <img :src="data[itemNr[loopNr]].image.imgSrcUrl" :alt="data[itemNr[loopNr]].image.imgAltText" width="200" height="280">
                                 <figcaption>
-                                    {{ activeImgText[itemNr[loopNr]] }}
+                                    {{ data[itemNr[loopNr]].image.itemImageText }}
                                 </figcaption>
                             </figure>
-                            <p class="price">{{ activePrice[itemNr[loopNr]] }} {{ activeCurrency }}</p>
-                            <p class="itemDescr">{{ activeItemDescription[itemNr[loopNr]] }}</p>
-                            <small class="artNr">Artikel "{{activeDataset}}-{{this.itemNr[loopNr]}}"</small>
+                            <p class="price">{{ data[itemNr[loopNr]].itemPrice }} {{ data[itemNr[loopNr]].currency }}</p>
+                            <p class="itemDescr">{{ data[itemNr[loopNr]].itemDescription }}</p>
+                            <small class="artNr">Artikel "{{ data[itemNr[loopNr]].articleNr }}"</small>
                         </div>
                     </div>
                 </section>
@@ -46,97 +48,250 @@
                 return {
                     amountOfComponents: 200,
                     headerHeadingOne: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
-                    itemHeadingOne: ["Plingor", "Strandvått", "Megaflott", "Sommar", "Båtliv", "Parfympump", "Spadsåg", "Golvpelare", "Äkta mojäng", "Leksaksratt", "Biltåg", "Leksakshjul", "Fäste", "Kugghjul", "Metallmojäng", "Telefon", "Stuprör", "Vred", "Högtalarpelare", "Ståltrådsmackapär"],
-                    imgSrcUrlOne:  ["pictures/mixed/plingor.jpg", "pictures/mixed/beach.jpg", "pictures/mixed/grease.jpg", "pictures/mixed/sun.jpg", "pictures/mixed/boat.jpg", "pictures/mixed/itemimage.jpg", "pictures/mixed/sawandspade.jpg", "pictures/mixed/floorpillar.jpg", "pictures/mixed/gadgetinsherwood.jpg", "pictures/mixed/toycarsteerwheel.jpg", "pictures/mixed/toytraincar.jpg", "pictures/mixed/toywagonwheel.jpg", "pictures/mixed/attachment.jpg", "pictures/mixed/cogwheel.jpg", "pictures/mixed/metalthing.jpg", "pictures/mixed/oldphone.jpg", "pictures/mixed/pipe.jpg", "pictures/mixed/rustyturnhandle.jpg", "pictures/mixed/speakerthing.jpg", "pictures/mixed/wirething.jpg"],
-                    imgAltTextOne: ["Småklockor hänger från träd", "Bad och strand", "Flottig bacon i närbild", "Solen blänker i havet", "Kanotliknande båt vid brygga", "Tecknad pump för parfym", "Såg och spade hänger på utevägg", "Golvpelare ansluter mot golv", "Rostig grej på marken", "Ratt på en leksaksbil", "Bil liknande leksakståg", "Hjul på leksaksbil", "Rostigt fäste på stolpe", "Rostigt kugghjul", "Metallmojäng, går ej se vad", "Mycket gammal telefon", "Gammalt stuprör", "Gammalt rostigt vred", "Risigt hemmabyggd högtalare på metallstav", "Rostigt vinda för fäste av ståltråd"],
-                    itemImageTextOne: ["Pling pling", "Bada baden", "Flåttigt", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Golv och pelare", "Mojäng av äkta kvalitet", "Lekande sväng med leksaksratt", "Det här går som tåget, utan räls", "Tuffare fälgar finns inte att hitta", "Fäste för bra infästningar", "Kugghjulet som driver det mesta", "Mackapärisk metallmojäng av bästa sort", "Ring ring, slå en singnal", "Leder vatten kalasbra", "Vrid och vred runt", "Spela och dunka musik", "Garanterat bra att ha"],
-                    itemPriceOne: [198, 2999, 499, 99, 21, 57, 83, 1005, 99, 170, 4999, 15, 99, 201, 598, 89, 78, 85, 19, 920],
-                    currencyOne: "Kr",
-                    itemDescriptionOne: [
-                        "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
-                        "Varmt på stranden? Svalka dig och ta ett dopp.",
-                        "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
-                        "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
-                        "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
-                        "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
-                        "Ingen med glasögon, men en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, vero quos. Facere atque nostrum velit voluptate.",
-                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam facilis tempora deserunt suscipit ipsam.",
-                        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, ab! Ea maiores ipsum nulla inventore quidem sed blanditiis?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum inventore ullam quo corporis pariatur quam perferendis!",
-                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor culpa itaque nemo voluptate libero animi, error possimus.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, itaque aspernatur impedit placeat nostrum at? Debitis, nemo dolorem.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur exercitationem nam quisquam nisi. Quaerat, pariatur?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit cupiditate ipsa sapiente nihil. Pariatur autem id veniam?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quo, porro totam cumque necessitatibus voluptatum quos modi eaque numquam.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto illo aperiam inventore officiis neque, pariatur molestiae!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse vero quae officiis quidem inventore id incidunt!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, eius magni itaque a voluptatem labore maxime pariatur facere!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos minus tempora assumenda iure. Fugit, modi! Adipisci?"
-                    ],
-                    datasetOne: 1,
-
                     headerHeadingTwo: 'Vue-Dataset-Två | Vue-Dataset-Två | Vue-Dataset-Två',
-                    itemHeadingTwo: ["Trädtoppar", "Alptoppar", "Damm", "Björkhängen", "Insektsmiddag", "Fågelmat", "Snöskvätta", "Raststolpe", "Utsiktspinne", "Hotell fågelinn", "Skönsångare", "Klätterträd", "Hundboll", "Surt o gött", "Rödfågel", "Sprattelmås", "Flygare", "Fågelrestaurang", "Naturupplevelse", "Skönblomster"],
-                    imgSrcUrlTwo: ["pictures/nature/trees.jpg", "pictures/nature/alpspitze.jpg", "pictures/nature/pond.jpg", "pictures/nature/birchpendants.jpg", "pictures/nature/birdeatinsect.jpg", "pictures/nature/birdfood.jpg", "pictures/nature/birdoneleg.jpg", "pictures/nature/birdonpole.jpg", "pictures/nature/birdonstick.jpg", "pictures/nature/birdsatnest.jpg", "pictures/nature/birdsinger.jpg", "pictures/nature/birdtreeclimb.jpg", "pictures/nature/dogballrunning.jpg", "pictures/nature/lime.jpg", "pictures/nature/redbird.jpg", "pictures/nature/seabirdgroundflight.jpg", "pictures/nature/seagulflight.jpg", "pictures/nature/seagulsonfield.jpg", "pictures/nature/waterfall.jpg", "pictures/nature/yellowwaterflowers.jpg"],
-                    imgAltTextTwo: ["Trädtoppar sträcker sig mot himlen", "Alptoppar", "Damm", "Björkhängen", "Fågel äter insekt", "Larv hänger ut i luften", "Fågel stående på ett ben", "Fågel rastar på en stolpe", "Fågel tittar ut från en kvist", "Fåglar vid sitt bo", "Fågel sjunger för fullt", "Fågel klättrar i träd", "Hund med boll i munnen", "Skuren lime staplat på hög", "Röd fågel sitter på kvist", "Fiskmås i flykten nära marken", "Mås ute och flyger", "Flock av måsar samlade på ett gärde", "Vattenfall", "Gula blommor och gröna blad"],
-                    itemImageTextTwo: ["Trädkrona mot himlen", "Alptoppar i solsken", "Odammig damm", "Gröna björkhängen", "Insekter till middag", "Solande larv", "Snabb i luften, snabb på land", "Fågelstolpe för en bra paus", "Kvist anpassad för utsikt", "Bo med bra utsikt", "Fågelopera, första parkett", "Klätterträd gott nog åt fåglar", "Boll lek", "Gott med en skvätt socker", "Rödfågel, en livsnjutare", "Sprattligaste sprattelmåsen", "Flygtur ovan väg", "Måsbesök på fågelrestaurangen", "Väl värt ett besök", "Välgörande gulblomster"],
-                    itemPriceTwo: [299, 599, 1999, 19, 119, 20, 33, 29, 99, 199, 12, 250, 189, 20, 99, 289, 69, 17, 78, 199],
-                    currencyTwo: "Kr",
-                    itemDescriptionTwo: [
-                        "Trädtoppar mot himlen sträcker sig uppåt i full prakt, köp ett klätterträd.",
-                        "Alptoppar och trädkronor i perfekt semesterkombination till överkomliga priser.",
-                        "Damm helt utan damm, garanterat fri från kvalster. Kvalsterfritt i damm, garanterat. Perfekt till sommaren.",
-                        "Björkhängen för att garantera björkens fortsatta tillväxt. Allergiovänligt men björkvänligt.",
-                        "Småfåglarnas favoriträtt, insekter. Brakmiddag med fin utsikt.",
-                        "Larver perfekta att mata fåglarna i din trädgård. Mättar lika bra som en mask.",
-                        "Supersnabb fågel, springer lika fort på ett ben som den kan flyga. Snabbare än de flesta snabbflygande fåglar.",
-                        "Bekväm och bra fågelstolpe för de bästa pauserna. Lugn och go.",
-                        "Till alla fåglar som älskar att speja efter lunchen med stabil grund på bra höjd.",
-                        "Passar lika bra till kakaduor som gröngölingssångare. Lagom högt över mark, lagom bra.",
-                        "Lyssna till en vacker opera ariang av en underbar skönsångar med toner som hämtade från himlen.",
-                        "Ge dina fåglar en fantastisk plats att klättra runt på. Lika roligt som en flygtur till molnen.",
-                        "Röd boll som är lika go att tugga på för hunden som det bästa hundbenet.",
-                        "Smakar bäst med en nypa socker till. Går att ha i drycken såväl som till maten.",
-                        "Rödfågel, skogens livsnjutare. Njuter mest hela dagen både på kvistar, pinnar och under sina flygturer.",
-                        "Sprattelmås, en udda sort av fiskmås. Utmärkta flygare och luftakrobater med sprattel som specialitet.",
-                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus fugiat rem quas sit, impedit ad!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor aspernatur asperiores quis facere voluptatibus quasi necessitatibus laboriosam!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem facere atque excepturi.",
-                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit soluta eos odit similique amet!"
-                    ],
-                    datasetTwo: 2,
-
                     activeHeaderHeading: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
-                    activeHeading: ["Plingor", "Strandvått", "Megaflott", "Sommar", "Båtliv", "Parfympump", "Spadsåg", "Golvpelare", "Äkta mojäng", "Leksaksratt", "Biltåg", "Leksakshjul", "Fäste", "Kugghjul", "Metallmojäng", "Telefon", "Stuprör", "Vred", "Högtalarpelare", "Ståltrådsmackapär"],
-                    activeImgSrc:  ["pictures/mixed/plingor.jpg", "pictures/mixed/beach.jpg", "pictures/mixed/grease.jpg", "pictures/mixed/sun.jpg", "pictures/mixed/boat.jpg", "pictures/mixed/itemimage.jpg", "pictures/mixed/sawandspade.jpg", "pictures/mixed/floorpillar.jpg", "pictures/mixed/gadgetinsherwood.jpg", "pictures/mixed/toycarsteerwheel.jpg", "pictures/mixed/toytraincar.jpg", "pictures/mixed/toywagonwheel.jpg", "pictures/mixed/attachment.jpg", "pictures/mixed/cogwheel.jpg", "pictures/mixed/metalthing.jpg", "pictures/mixed/oldphone.jpg", "pictures/mixed/pipe.jpg", "pictures/mixed/rustyturnhandle.jpg", "pictures/mixed/speakerthing.jpg", "pictures/mixed/wirething.jpg"],
-                    activeImgAlt: ["Småklockor hänger från träd", "Bad och strand", "Flottig bacon i närbild", "Solen blänker i havet", "Kanotliknande båt vid brygga", "Tecknad pump för parfym", "Såg och spade hänger på utevägg", "Golvpelare ansluter mot golv", "Rostig grej på marken", "Ratt på en leksaksbil", "Bil liknande leksakståg", "Hjul på leksaksbil", "Rostigt fäste på stolpe", "Rostigt kugghjul", "Metallmojäng, går ej se vad", "Mycket gammal telefon", "Gammalt stuprör", "Gammalt rostigt vred", "Risigt hemmabyggd högtalare på metallstav", "Rostigt vinda för fäste av ståltråd"],
-                    activeImgText: ["Pling pling", "Bada baden", "Flåttigt", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Golv och pelare", "Mojäng av äkta kvalitet", "Lekande sväng med leksaksratt", "Det här går som tåget, utan räls", "Tuffare fälgar finns inte att hitta", "Fäste för bra infästningar", "Kugghjulet som driver det mesta", "Mackapärisk metallmojäng av bästa sort", "Ring ring, slå en singnal", "Leder vatten kalasbra", "Vrid och vred runt", "Spela och dunka musik", "Garanterat bra att ha"],
-                    activePrice: [198, 2999, 499, 99, 21, 57, 83, 1005, 99, 170, 4999, 15, 99, 201, 598, 89, 78, 85, 19, 920],
-                    activeCurrency: "Kr",
-                    activeItemDescription: [
-                        "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
-                        "Varmt på stranden? Svalka dig och ta ett dopp.",
-                        "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
-                        "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
-                        "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
-                        "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
-                        "Ingen med glasögon, men en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, vero quos. Facere atque nostrum velit voluptate.",
-                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam facilis tempora deserunt suscipit ipsam.",
-                        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, ab! Ea maiores ipsum nulla inventore quidem sed blanditiis?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum inventore ullam quo corporis pariatur quam perferendis!",
-                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor culpa itaque nemo voluptate libero animi, error possimus.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, itaque aspernatur impedit placeat nostrum at? Debitis, nemo dolorem.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur exercitationem nam quisquam nisi. Quaerat, pariatur?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit cupiditate ipsa sapiente nihil. Pariatur autem id veniam?",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quo, porro totam cumque necessitatibus voluptatum quos modi eaque numquam.",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto illo aperiam inventore officiis neque, pariatur molestiae!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse vero quae officiis quidem inventore id incidunt!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, eius magni itaque a voluptatem labore maxime pariatur facere!",
-                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos minus tempora assumenda iure. Fugit, modi! Adipisci?"
-                    ],
-                    activeDataset: 1
+                    data: [
+                        {
+                            itemHeading: "Plingor",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/plingor.jpg",
+                                imgAltText: "Småklockor hänger från träd",
+                                itemImageText: "Pling pling"
+                            },
+                            itemPrice: 198,
+                            currency: "Kr",
+                            itemDescription: "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
+                            articleNr: "1-0"
+                        },
+                        {
+                            itemHeading: "Strandvått",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/beach.jpg",
+                                imgAltText: "Bad och strand",
+                                itemImageText: "Bada baden"
+                            },
+                            itemPrice: 2999,
+                            currency: "Kr",
+                            itemDescription: "Varmt på stranden? Svalka dig och ta ett dopp.",
+                            articleNr: "1-1"
+                        },
+                        {
+                            itemHeading: "Megaflott",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/grease.jpg",
+                                imgAltText: "Flottig bacon i närbild",
+                                itemImageText: "Flåttigt"
+                            },
+                            itemPrice: 499,
+                            currency: "Kr",
+                            itemDescription: "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
+                            articleNr: "1-2"
+                        },
+                        {
+                            itemHeading: "Sommar",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/sun.jpg",
+                                imgAltText: "Solen blänker i havet",
+                                itemImageText: "Sommarsol"
+                            },
+                            itemPrice: 99,
+                            currency: "Kr",
+                            itemDescription: "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
+                            articleNr: "1-3"
+                        },
+                        {
+                            itemHeading: "Båtliv",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/boat.jpg",
+                                imgAltText: "Kanotliknande båt vid brygga",
+                                itemImageText: "Ta en tur på sjön"
+                            },
+                            itemPrice: 21,
+                            currency: "Kr",
+                            itemDescription: "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
+                            articleNr: "1-4"
+                        },
+                        {
+                            itemHeading: "Parfympump",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/itemimage.jpg",
+                                imgAltText: "Tecknad pump för parfym",
+                                itemImageText: "Lukta gott hela dagen"
+                            },
+                            itemPrice: 57,
+                            currency: "Kr",
+                            itemDescription: "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
+                            articleNr: "1-5"
+                        },
+                        {
+                            itemHeading: "Spadsåg",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/sawandspade.jpg",
+                                imgAltText: "Såg och spade hänger på utevägg",
+                                itemImageText: "Gräv och såga, så kul"
+                            },
+                            itemPrice: 83,
+                            currency: "Kr",
+                            itemDescription: "Ingen med glasögon, men en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
+                            articleNr: "1-6"
+                        },
+                        {
+                            itemHeading: "Golvpelare",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/floorpillar.jpg",
+                                imgAltText: "Golvpelare ansluter mot golv",
+                                itemImageText: "Golv och pelare"
+                            },
+                            itemPrice: 1005,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, vero quos. Facere atque nostrum velit voluptate.",
+                            articleNr: "1-7"
+                        },
+                        {
+                            itemHeading: "Äkta mojäng",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/gadgetinsherwood.jpg",
+                                imgAltText: "Rostig grej på marken",
+                                itemImageText: "Mojäng av äkta kvalitet"
+                            },
+                            itemPrice: 99,
+                            currency: "Kr",
+                            itemDescription: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam facilis tempora deserunt suscipit ipsam.",
+                            articleNr: "1-8"
+                        },
+                        {
+                            itemHeading: "Leksaksratt",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/toycarsteerwheel.jpg",
+                                imgAltText: "Ratt på en leksaksbil",
+                                itemImageText: "Lekande sväng med leksaksratt"
+                            },
+                            itemPrice: 170,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, ab! Ea maiores ipsum nulla inventore quidem sed blanditiis?",
+                            articleNr: "1-9"
+                        },
+                        {
+                            itemHeading: "Biltåg",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/toytraincar.jpg",
+                                imgAltText: "Bil liknande leksakståg",
+                                itemImageText: "Det här går som tåget, utan räls"
+                            },
+                            itemPrice: 4999,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum inventore ullam quo corporis pariatur quam perferendis!",
+                            articleNr: "1-10"
+                        },
+                        {
+                            itemHeading: "Leksakshjul",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/toywagonwheel.jpg",
+                                imgAltText: "Hjul på leksaksbil",
+                                itemImageText: "Tuffare fälgar finns inte att hitta"
+                            },
+                            itemPrice: 15,
+                            currency: "Kr",
+                            itemDescription: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor culpa itaque nemo voluptate libero animi, error possimus.",
+                            articleNr: "1-11"
+                        },
+                        {
+                            itemHeading: "Fäste",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/attachment.jpg",
+                                imgAltText: "Rostigt fäste på stolpe",
+                                itemImageText: "Fäste för bra infästningar"
+                            },
+                            itemPrice: 99,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, itaque aspernatur impedit placeat nostrum at? Debitis, nemo dolorem.",
+                            articleNr: "1-12"
+                        },
+                        {
+                            itemHeading: "Kugghjul",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/cogwheel.jpg",
+                                imgAltText: "Rostigt kugghjul",
+                                itemImageText: "Kugghjulet som driver det mesta"
+                            },
+                            itemPrice: 201,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur exercitationem nam quisquam nisi. Quaerat, pariatur?",
+                            articleNr: "1-13"
+                        },
+                        {
+                            itemHeading: "Metallmojäng",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/metalthing.jpg",
+                                imgAltText: "Metallmojäng, går ej se vad",
+                                itemImageText: "Mackapärisk metallmojäng av bästa sort"
+                            },
+                            itemPrice: 598,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit cupiditate ipsa sapiente nihil. Pariatur autem id veniam?",
+                            articleNr: "1-14"
+                        },
+                        {
+                            itemHeading: "Telefon",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/oldphone.jpg",
+                                imgAltText: "Mycket gammal telefon",
+                                itemImageText: "Ring ring, slå en singnal"
+                            },
+                            itemPrice: 89,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quo, porro totam cumque necessitatibus voluptatum quos modi eaque numquam.",
+                            articleNr: "1-15"
+                        },
+                        {
+                            itemHeading: "Stuprör",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/pipe.jpg",
+                                imgAltText: "Gammalt stuprör",
+                                itemImageText: "Leder vatten kalasbra"
+                            },
+                            itemPrice: 78,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto illo aperiam inventore officiis neque, pariatur molestiae!",
+                            articleNr: "1-16"
+                        },
+                        {
+                            itemHeading: "Vred",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/rustyturnhandle.jpg",
+                                imgAltText: "Gammalt rostigt vred",
+                                itemImageText: "Vrid och vred runt"
+                            },
+                            itemPrice: 85,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse vero quae officiis quidem inventore id incidunt!",
+                            articleNr: "1-17"
+                        },
+                        {
+                            itemHeading: "Högtalarpelare",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/speakerthing.jpg",
+                                imgAltText: "Risigt hemmabyggd högtalare på metallstav",
+                                itemImageText: "Spela och dunka musik"
+                            },
+                            itemPrice: 19,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, eius magni itaque a voluptatem labore maxime pariatur facere!",
+                            articleNr: "1-18"
+                        },
+                        {
+                            itemHeading: "Ståltrådsmackapär",
+                            image: {
+                                imgSrcUrl: "pictures/mixed/wirething.jpg",
+                                imgAltText: "Rostigt vinda för fäste av ståltråd",
+                                itemImageText: "Garanterat bra att ha"
+                            },
+                            itemPrice: 920,
+                            currency: "Kr",
+                            itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos minus tempora assumenda iure. Fugit, modi! Adipisci?",
+                            articleNr: "1-19"
+                        },
+                    ]
                 }
             },
             methods: {
@@ -147,26 +302,12 @@
                     console.log("New values from parent " + this.itemNr);
                 },
                 changeToDataSetTwo() {
-                    this.activeHeaderHeading = this.headerHeadingTwo;
-                    this.activeHeading = this.itemHeadingTwo;
-                    this.activeImgSrc = this.imgSrcUrlTwo;
-                    this.activeImgAlt = this.imgAltTextTwo;
-                    this.activeImgText = this.itemImageTextTwo;
-                    this.activePrice = this.itemPriceTwo;
-                    this.activeCurrency = this.currencyTwo;
-                    this.activeItemDescription = this.itemDescriptionTwo;
-                    this.activeDataset = this.datasetTwo;
+                    this.data = datasetTwo;
+                    console.log("Hello data two");
                 },
                 changeToDataSetOne() {
-                    this.activeHeaderHeading = this.headerHeadingOne;
-                    this.activeHeading = this.itemHeadingOne;
-                    this.activeImgSrc = this.imgSrcUrlOne;
-                    this.activeImgAlt = this.imgAltTextOne;
-                    this.activeImgText = this.itemImageTextOne;
-                    this.activePrice = this.itemPriceOne;
-                    this.activeCurrency = this.currencyOne;
-                    this.activeItemDescription = this.itemDescriptionOne;
-                    this.activeDataset = this.datasetOne;
+                    this.data = datasetOne;
+                    console.log("Hello data one");
                 }
             },
             beforeCreate() {
@@ -174,7 +315,7 @@
                 for (let i = 0; i < 200; i++) {
                     this.itemNr[i] = Math.floor((Math.random() * 10));
                 }
-                console.log("Values created in parent " + this.itemNr);
+                console.log("Created values in parent " + this.itemNr);
             },
             created() {
                 //
