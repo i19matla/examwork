@@ -11,16 +11,14 @@
     <p id="newArrayArea">
 
     </p>
-    <script src="neworiginaldataset.js"></script>
-    <!-- <script src="dataset1.js"></script> -->
-    <!-- <script src="dataset2.js"></script> -->
+    <!-- Variable name from the import: data -->
+    <script src="publicdomainbasedataset.js"></script>
     <script>
+        var dataToHandle = data;
         var amountOfItems = 200;
         var newDataSet = [];
         var itemNr = [];
-        // Switch between dataset one and two here with a comment and uncomment
-        var dataToHandle = datasetOne;
-        // var dataToHandle = datasetTwo;
+        
         itemNrRandomizer();
 
         function itemNrRandomizer() {
@@ -33,21 +31,26 @@
         function createDatasets(printData) {
             for (let i = 0; i < itemNr.length; i++) {
                 $(function () {
-                    $("#newArrayArea").append(`{
-                        itemHeading: "${printData[itemNr[i]].itemHeading}",<br>
-                        image: { <br>
-                            imgSrcUrl: "${printData[itemNr[i]].image.imgSrcUrl}",<br>
-                            imgAltText: "${printData[itemNr[i]].image.imgAltText}",<br>
-                            itemImageText: "${printData[itemNr[i]].image.itemImageText}",<br>
-                            itemImageTitle: "${printData[itemNr[i]].image.itemImageTitle}"<br>
-                        },<br>
-                        itemPrice: ${printData[itemNr[i]].itemPrice},<br>
-                        currency: "${printData[itemNr[i]].currency}",<br>
-                        itemDescription: "${printData[itemNr[i]].itemDescription}",<br>
-                        articleNr: "${printData[itemNr[i]].articleNr}"<br>
-                    },<br>`);
+                    $("#newArrayArea").append(
+                        `
+                            {
+                                itemHeading: "${printData[itemNr[i]].itemHeading}",<br>
+                                image: { <br>
+                                    imgSrcUrl: "${printData[itemNr[i]].image.imgSrcUrl}",<br>
+                                    imgAltText: "${printData[itemNr[i]].image.imgAltText}",<br>
+                                    itemImageText: "${printData[itemNr[i]].image.itemImageText}",<br>
+                                    itemImageTitle: "${printData[itemNr[i]].image.itemImageTitle}"<br>
+                                },<br>
+                                itemPrice: ${printData[itemNr[i]].itemPrice},<br>
+                                currency: "${printData[itemNr[i]].currency}",<br>
+                                itemDescription: "${printData[itemNr[i]].itemDescription}",<br>
+                                articleNr: "${printData[itemNr[i]].articleNr}"<br>
+                            },<br>
+                        `
+                    );
                 })
             }
+            alert("Håll ner control och tryck på a - fortsätt håll nere control och tryck på c efter du tagit bort detta meddelande. Det kopierar alla json objekt.")
         }
     </script>
 </body>
