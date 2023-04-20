@@ -7,12 +7,12 @@
     <title>05 jQuery pilot application</title>
     <link rel="stylesheet" href="examstyling.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="workingMeasureexperiment.js"></script>
 </head>
 <body>
     <header>
         <div id="buttonArea">
             <button id="buttonSetTwo" onclick="changeToDataSetTwo()">Byt till: Dataset två</button>
-            <button id="randomizeNewOrder" onclick="itemNrRandomizer()">Slumpa fram ny ordning för båda dataseten</button>
             <button id="buttonSetOne" onclick="changeToDataSetOne()">Byt till: Dataset ett</button>
         </div>
     </header>
@@ -24,86 +24,59 @@
     <footer>
 
     </footer>
-    <script src="dataset1.js"></script>
-    <script src="dataset2.js"></script>
+    <script src="01randomizedData2000.js"></script>
+    <script src="02randomizedData2000.js"></script>
     <script>
-        // var datasetOne imported
-        // var datasetTwo imported
-        var itemNr = [];
-        var amountOfItems = 2000;
-        var timer1 = [];
-        var timer2 = [];
+        localStorage.setItem("timeBeforCreate", Date.now());
+        var amountOfItems = datasetOne2000.length;        
 
-        $(function () {
-            $("header").prepend(`<h1 id="overAllHeader">jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett</h1>`);
-        });
         
-        console.log(datasetOne[1].itemHeading);
-        console.log(datasetOne[1].image.imgSrcUrl);
-        console.log(datasetOne[1].image.imgAltText);
-        console.log(datasetOne[1].image.itemImageText);
-        console.log(datasetOne[1].itemPrice);
-        console.log(datasetOne[1].currency);
-        console.log(datasetOne[1].itemDescription);
-        console.log(datasetOne[1].articleNr);
-        
+        $("header").prepend(`<h1 id="overAllHeader">jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett</h1>`);
+                
         for (let i = 0; i < amountOfItems; i++) {
-            if (i < 1) itemNrRandomizer();
-            $(function () {
-                $("#webShopApp").append(
-                    `
-                        <div class="itemContainer">
-                            <h2 id="itemHeading${i}">${ datasetOne[itemNr[i]].itemHeading }</h2>
-                            <figure>
-                                <img id="itemImg${i}" src="${datasetOne[itemNr[i]].image.imgSrcUrl}" alt="${datasetOne[itemNr[i]].image.imgAltText}" width="200" height="280" title="Vacker bild dataset 1">
-                                <figcaption id="itemFigText${i}">
-                                    ${datasetOne[itemNr[i]].image.itemImageText}
-                                </figcaption>
-                            </figure>
-                            <p id="itemPrice${i}" class="price">${datasetOne[itemNr[i]].itemPrice} ${datasetOne[itemNr[i]].currency}</p>
-                            <p id="itemDescr${i}" class="itemDescr">${datasetOne[itemNr[i]].itemDescription}</p>
-                            <small id="artNr${i}">Artikel "${datasetOne[itemNr[i]].articleNr}"</small>
-                        </div>
-                    `
-                );
-            })
-        }
-
-        function itemNrRandomizer() {
-            for (let i = 0; i < amountOfItems; i++) {
-                itemNr[i] = Math.floor((Math.random() * 20));   
-            }
+            $("#webShopApp").append(
+                `
+                    <div class="itemContainer">
+                        <h2 id="itemHeading${i}">${ datasetOne2000[i].itemHeading }</h2>
+                        <figure>
+                            <img id="itemImg${i}" src="${datasetOne2000[i].image.imgSrcUrl}" alt="${datasetOne2000[i].image.imgAltText}" width="200" height="280" title="Vacker bild dataset 1">
+                            <figcaption id="itemFigText${i}">
+                                ${datasetOne2000[i].image.itemImageText}
+                            </figcaption>
+                        </figure>
+                        <p id="itemPrice${i}" class="price">${datasetOne2000[i].itemPrice} ${datasetOne2000[i].currency}</p>
+                        <p id="itemDescr${i}" class="itemDescr">${datasetOne2000[i].itemDescription}</p>
+                        <small id="artNr${i}">Artikel "${datasetOne2000[i].articleNr}"</small>
+                    </div>
+                `
+            );
         }
 
         function changeToDataSetTwo() {
-            $(function () {
-                $(`#overAllHeader`).text("jQuery-Dataset-Två | jQuery-Dataset-Två | jQuery-Dataset-Två");
-            });
-            
+            $(`#overAllHeader`).text("jQuery-Dataset-Två | jQuery-Dataset-Två | jQuery-Dataset-Två");
             for (let i = 0; i < amountOfItems; i++) {
-                $(`#itemHeading${i}`).text(datasetTwo[itemNr[i]].itemHeading);
-                $(`#itemImg${i}`).attr({ "src" : datasetTwo[itemNr[i]].image.imgSrcUrl, "alt": datasetTwo[itemNr[i]].image.imgAltText, "title" :  datasetTwo[itemNr[i]].image.itemImageTitle });
-                $(`#itemFigText${i}`).text(datasetTwo[itemNr[i]].image.itemImageText);
-                $(`#itemPrice${i}`).text(datasetTwo[itemNr[i]].itemPrice + " " + datasetOne[itemNr[i]].currency);
-                $(`#itemDescr${i}`).text(datasetTwo[itemNr[i]].itemDescription);
-                $(`#artNr${i}`).text("Artikel \"" + datasetTwo[itemNr[i]].articleNr+"\"");
+                $(`#itemHeading${i}`).text(datasetTwo2000[i].itemHeading );
+                $(`#itemImg${i}`).attr({ "src" : datasetTwo2000[i].image.imgSrcUrl, "alt": datasetTwo2000[i].image.imgAltText, "title" : "Vacker bild dataset 2" });
+                $(`#itemFigText${i}`).text(datasetTwo2000[i].image.itemImageText);
+                $(`#itemPrice${i}`).text(datasetTwo2000[i].itemPrice + " " + datasetTwo2000[i].currency);
+                $(`#itemDescr${i}`).text(datasetTwo2000[i].itemDescription);
+                $(`#artNr${i}`).text("Artikel \"" + datasetTwo2000[i].articleNr+"\"");
             }
         }
 
         function changeToDataSetOne() {
-            $(function() {
-                $(`#overAllHeader`).text("jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett");
-            });
-            
+            $(`#overAllHeader`).text("jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett");
             for (let i = 0; i < amountOfItems; i++) {
-                $(`#itemHeading${i}`).text(datasetOne[itemNr[i]].itemHeading);
-                $(`#itemImg${i}`).attr({ "src" : datasetOne[itemNr[i]].image.imgSrcUrl, "alt": datasetOne[itemNr[i]].image.imgAltText, "title" : "Vacker bild dataset 2" });
-                $(`#itemFigText${i}`).text(datasetOne[itemNr[i]].image.itemImageText);
-                $(`#itemPrice${i}`).text(datasetOne[itemNr[i]].itemPrice + " " + datasetOne[itemNr[i]].currency);
-                $(`#itemDescr${i}`).text(datasetOne[itemNr[i]].itemDescription);
-                $(`#artNr${i}`).text("Artikel \"" + datasetOne[itemNr[i]].articleNr+"\"");
+                $(`#itemHeading${i}`).text(datasetOne2000[i].itemHeading );
+                $(`#itemImg${i}`).attr({ "src" : datasetOne2000[i].image.imgSrcUrl, "alt": datasetOne2000[i].image.imgAltText, "title" : "Vacker bild dataset 2" });
+                $(`#itemFigText${i}`).text(datasetOne2000[i].image.itemImageText);
+                $(`#itemPrice${i}`).text(datasetOne2000[i].itemPrice + " " + datasetOne2000[i].currency);
+                $(`#itemDescr${i}`).text(datasetOne2000[i].itemDescription);
+                $(`#artNr${i}`).text("Artikel \"" + datasetOne2000[i].articleNr+"\"");
             }
-        }        
+        }
+
+        
     </script>
 </body>
 </html>
