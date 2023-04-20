@@ -70,5 +70,30 @@ addEventListener("load", (event) => {
                 }
             }
         }
+
+        function createTextFile() {
+            localStorage.setItem("readyToRun", "no");
+            var jQueryAverage = 0;
+            var vueAverage = 0;
+            /* // Human readable
+            let measurePoints = "jQuery      Vue\n";
+            for (let i = 1; i < amountOfMeasurements + 1; i++) {
+                measurePoints += localStorage.getItem("jQueryTimeRound" + i) + "         " + localStorage.getItem("VueTimeRound" + i) + "\n";
+                jQueryAverage += parseInt(localStorage.getItem("jQueryTimeRound" + i));
+                vueAverage += parseInt(localStorage.getItem("VueTimeRound" + i));
+            }
+            var writeToFile = "Average:     Average:\n" + (jQueryAverage / amountOfMeasurements) + "        "  + (vueAverage / amountOfMeasurements) + "\n" + measurePoints; */
+            // For Python
+            let measurePoints = "";
+            for (let i = 1; i < amountOfMeasurements + 1; i++) {
+                measurePoints += localStorage.getItem("jQueryTimeRound" + i) + "," + localStorage.getItem("VueTimeRound" + i) + "\n";
+            }
+            const blob = new Blob([measurePoints], {type: "text/plain"});
+            const fileUrl = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.download = amountOfMeasurements + "MeasurementsjQueryVue";
+            link.href = fileUrl;
+            link.click();
+        }
     }
 });
