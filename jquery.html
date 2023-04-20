@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>01 jQuery pilot application</title>
     <link rel="stylesheet" href="examstyling.css">
-    <!-- Denna är den senast tillgänliga versionen av jQuery, så färsk att inte ens google har den i sitt api bibliotek i skrivande stund måndag 2023-03-13 -->
-    <!-- Gå in här för att se, https://code.jquery.com/jquery-3.6.4.js (exakt samma adress som i cdn importen nedan) i en kommentar står att den är släppt 2023-03-08 -->
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <!-- jQuery jQuery jQuery jQuery jQuery jQuery jQuery jQuery jQuery  -->
 </head>
@@ -25,46 +23,56 @@
     </footer>
 
     <script>
-        var itemHeading = "Produktrubrik";
-        var imgAltText = "Text som visas om inte bilden kan visas.";
-        var itemImageText = "En bildtext under bilden.";
-        var itemPrice = 99;
+        var itemHeading = ["Plingor","Trädtoppar", "Strandvått", "Megaflott", "Dammflöde", "Sommar", "Båtliv", "Parfympump", "Spadsåg", "Alpspitze"];
+        var imgSrcUrl =  ["pictures/plingor.jpg", "pictures/trees.jpg", "pictures/beach.jpg", "pictures/grease.jpg", "pictures/pond.jpg", "pictures/sun.jpg", "pictures/boat.jpg", "pictures/itemimage.jpg", "pictures/sawandspade.jpg", "pictures/alpspitze.jpg"];
+        var imgAltText = ["", "", "", "", "", "", "", "", "Såg och spade hänger på utevägg", ""];
+        var itemImageText = ["Pling pling", "Vackra fina träd", "Bada baden", "Flåttigt", "Odammande damm", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Sikta mot toppen!"];
+        var itemPrice = ["198", "2999", "499", "99", "21", "57", "83", "1005", "99", "4999"];
         var currency = "Kr";
-        var itemDescription = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, quod!";
-        // Lägg till document ready grejen.
+        var itemDescription =  [
+                "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
+                "Växer sig fina om sommaren, odlas bäst i bördig jord. Vattnas lagom, sällan mer.",
+                "Varmt på stranden? Svalka dig och ta ett dopp.",
+                "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
+                "Flödar dammet? Med det här dammflödet kan du påverka de minsta kvalstren.",
+                "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
+                "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
+                "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
+                "Ingen med glasögon, en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
+                "Alptoppar är härligt. Köp en egen alptopp och ha på baksidan av trädgården."
+            ];
+        var itemNr = Number;
+
+        
         for (let i = 0; i < 200; i++) {
+            itemNrRandomizer();
             $($("#webShopApp")).append(
                 `
                     <div class="itemContainer">
-                        <h2>${ itemHeading } ${i + 1} ${evenOdd(i)}</h2>
+                        <h2>${ itemHeading[itemNr] }</h2>
                         <figure>
-                            <img src="${imageSetter(i)}" alt="${imgAltText}" width="200" height="280">
+                            <img src="${imgSrcUrl[itemNr]}" alt="${imgAltText[itemNr]}" width="200" height="280">
                             <figcaption>
-                                ${itemImageText}
+                                ${itemImageText[itemNr]}
                             </figcaption>
                         </figure>
-                        <p class="price">${itemPrice} ${currency}</p>
-                        <p class="itemDescr">${itemDescription }</p>
+                        <p class="price">${itemPrice[itemNr]} ${currency}</p>
+                        <p class="itemDescr">${itemDescription[itemNr] }</p>
                     </div>
                 `
             );
         }
-        function imageSetter(i) {
-            let imageToPrint = "";
-            if (i % 2 === 0) {
-                imageToPrint = "pictures/hooveringflow.jpg";
-            } else {
-                imageToPrint = "pictures/itemimage.jpg";
-            }
-            return imageToPrint;
+        function itemNrRandomizer() {
+            itemNr = Math.floor((Math.random() * 10));
+            return itemNr;
         }
 
         function evenOdd(i) {
             var printText = "This should be printed";
             if (i % 2 === 0) {
-                printText = "Siffran är ojämn"
-            } else {
                 printText = "Siffran är jämn"
+            } else {
+                printText = "Siffran är ojämn"
             }
             return printText;
         }
