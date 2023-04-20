@@ -2,35 +2,33 @@
 // @name     01 Mats measure script Exam
 // @version  1
 // @grant    none
-// @include	 http://127.0.0.1:5500/v09vue.html
-// @include http://127.0.0.1:5500/j05jquery.html
+// @include	 http://127.0.0.1:5500/vue.html
+// @include http://127.0.0.1:5500/jquery.html
 // ==/UserScript==
 
+const bodyEle = document.getElementsByTagName("body")[0];
 
-var counter = 0;
-var timer2;
-var timer1;
+const configuration = {
+    attributes: true,
+    childList: true,
+    subtree: true
+};
+var timer1 = 0;
+var timer2 = 0;
 
-document.addEventListener('DOMContentLoaded', function (event) {
+const callback = (mutationList, listen) => {
     timer1 = Date.now();
-    console.log("Sidan har laddats");
-    if (counter < 3) {
-        timeMeasure();
+    for (const mutation of mutationList) {
+        if (mutation.type === "childList") {
+            console.log("Added/removed a child node");
+        } else if (mutation.type === "attributes") {
+            console.log(`${mutation.attributeName} was modified.`);
+        }
     }
-});
-
-function timeMeasure() {
-    if (counter > 0) {
-        console.log(timer1);
-        console.log(timer2);
-        console.log(timer1 - timer2);
-    }
-
     timer2 = Date.now();
-    counter++;
-    // XXXXXXXXXXXX EVERYTHING BELOW THIS COMMENT WILL BE MEASURED XXXXXXXXXXXX
-    document.getElementById("buttonSetTwo").click();
-    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-}
+    console.log(timer2-timer1);
+};
 
-timeMeasure();
+const listen = new Mutationlisten(callback);
+
+listen.observe(bodyEle, configuration);
