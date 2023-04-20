@@ -42,15 +42,15 @@
         minApp.component('item-in-shop', {
             template: `
                 <div class="itemContainer">
-                    <h2>{{ itemHeading[0] }} {{ loopNr + 1 }} {{evenOdd(loopNr)}}</h2>
+                    <h2>{{ itemHeading[itemNr] }}</h2>
                     <figure>
-                        <img :src="imageSetter(loopNr)" :alt="imgAltText" width="200" height="280">
+                        <img :src="imgSrcUrl[itemNr]" :alt="imgAltText[itemNr]" width="200" height="280">
                         <figcaption>
-                            {{ itemImageText }}
+                            {{ itemImageText[itemNr] }}
                         </figcaption>
                     </figure>
-                    <p class="price">{{ itemPrice }} {{ currency }}</p>
-                    <p class="itemDescr">{{ itemDescription }}</p>
+                    <p class="price">{{ itemPrice[itemNr] }} {{ currency }}</p>
+                    <p class="itemDescr">{{ itemDescription[itemNr] }}</p>
                 </div>
             `,
             props: {
@@ -61,35 +61,37 @@
             },
             data() {
                 return {
-                    itemHeading: ["Produktrubrik",],
-                    imgSrcUrl: "pictures/hooveringflow.jpg",
-                    imgAltText: "Text som visas om inte bilden kan visas.",
-                    itemImageText: "En bildtext under bilden.",
-                    itemPrice: 99,
+                    itemNr: Number,
+                    itemHeading: ["Plingor","Trädgött", "Strandvått", "Megaflott", "Dammflöde", "Sommar", "Båtliv", "Parfymsniff", "Spadsåg", "Alpspitze"],
+                    imgSrcUrl: ["pictures/plingor.jpg", "pictures/trees.jpg", "pictures/beach.jpg", "pictures/grease.jpg", "pictures/pond.jpg", "pictures/sun.jpg", "pictures/boat.jpg", "pictures/itemimage.jpg", "pictures/sawandspade.jpg", "pictures/alpspitze.jpg"],
+                    imgAltText: ["", "", "", "", "", "", "", "", "Såg och spade hänger på utevägg", ""],
+                    itemImageText: ["Pling pling", "Vackra fina träd", "Bada baden", "Flåttigt", "Odammande damm", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Sikta mot toppen!"],
+                    itemPrice: ["198", "2999", "499", "99", "21", "57", "83", "1005", "99", "4999"],
                     currency: "Kr",
-                    itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, quod!"
+                    itemDescription: [
+                        "Fantastiska flaskpumpen, fantastisk som Lorem Ipsum skvandrilljum.",
+                        "Växer sig fina om sommaren, odlas bäst i jorden och vattnas lagom",
+                        "Varmt på stranden? Svalka dig och ta ett dopp.",
+                        "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
+                        "Flödar dammet? Med det här dammflödet kan du påverka de minsta kvalstren.",
+                        "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
+                        "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
+                        "Lukta gott med en puff av parfymsniff. Luktar godare än de flesta som luktar sämre.",
+                        "En spade och såg i det bästa skicket som går att få. Väl inarbetade.",
+                        "Alptoppar är härligt. Köp en egen alptopp och ha på baksidan av trädgården."
+                    ]
                 }
             },
             methods: {
-                imageSetter(i) {
-                    let imageToPrint = "";
-                    if (i % 2 === 0) {
-                        imageToPrint = "pictures/hooveringflow.jpg";
-                    } else {
-                        imageToPrint = "pictures/itemimage.jpg";
-                    }
-                    return imageToPrint;
+                itemNrRandomizer() {
+                    this.itemNr = Math.floor((Math.random() * 10));
                 },
-                evenOdd(i) {
-                    var printText = "This should be printed";
-                    if (i % 2 === 0) {
-                        printText = "Siffran är ojämn"
-                    } else {
-                        printText = "Siffran är jämn"
-                    }
-                    return printText;
-                }
-            }
+            },
+            //To call a function in Vue when the page is loading, you can use the created() lifecycle hook. This hook is called when the Vue instance is created,
+            // but before it is mounted to the DOM, making it a good place to initialize data or perform other setup tasks, such as calling a function.
+            created() {
+                this.itemNrRandomizer(); // Call the function when the component is created
+            },
         });
 
         minApp.mount('#webShopApp');
