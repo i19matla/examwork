@@ -351,19 +351,6 @@ var data = [
         articleNr: "27"
     },
     {
-        itemHeading: "Metallmojäng",
-        image: {
-            imgSrcUrl: "pictures/metalthing.jpg",
-            imgAltText: "Metallögla",
-            itemImageText: "Mackapärisk mojäng",
-            itemImageTitle: "Mackapärisk mojäng"
-        },
-        itemPrice: 99,
-        currency: "Kr",
-        itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit molestiae ipsam accusantium fugit quisquam!",
-        articleNr: "28"
-    },
-    {
         itemHeading: "Gammelträ",
         image: {
             imgSrcUrl: "pictures/oldwoodhouse.jpg",
@@ -374,7 +361,7 @@ var data = [
         itemPrice: 699,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio magnam tenetur reiciendis fugiat natus itaque ea!",
-        articleNr: "29"
+        articleNr: "28"
     },
     {
         itemHeading: "Öppen blomma",
@@ -387,7 +374,7 @@ var data = [
         itemPrice: 799,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore quia vero odio repudiandae, saepe voluptas!",
-        articleNr: "30"
+        articleNr: "29"
     },
     {
         itemHeading: "Orange blomma",
@@ -400,20 +387,20 @@ var data = [
         itemPrice: 769,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur modi explicabo quibusdam, molestias deserunt ea?",
-        articleNr: "31"
+        articleNr: "30"
     },
     {
-        itemHeading: "Lila blommor",
+        itemHeading: "Lila fluffblomma",
         image: {
             imgSrcUrl: "pictures/purpleflowers.jpg",
-            imgAltText: "Lila blommor",
-            itemImageText: "Väldoftande lila blommor",
-            itemImageTitle: "Väldoftande lila blommor"
+            imgAltText: "Lila fluffblomma",
+            itemImageText: "Väldoftande lila blomma",
+            itemImageTitle: "Väldoftande lila blomma"
         },
-        itemPrice: 569,
+        itemPrice: 69,
         currency: "Kr",
-        itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet earum odit accusamus, doloremque officiis eum!",
-        articleNr: "32"
+        itemDescription: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur modi explicabo quibusdam, molestias deserunt ea?",
+        articleNr: "31"
     },
     {
         itemHeading: "Rostlås",
@@ -426,7 +413,7 @@ var data = [
         itemPrice: 69,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis aliquam, rem optio molestias provident numquam.",
-        articleNr: "33"
+        articleNr: "32"
     },
     {
         itemHeading: "Rostigt lock",
@@ -439,7 +426,7 @@ var data = [
         itemPrice: 969,
         currency: "Kr",
         itemDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab assumenda fuga omnis deserunt nemo.",
-        articleNr: "34"
+        articleNr: "33"
     },
     {
         itemHeading: "Stångblommor",
@@ -452,7 +439,7 @@ var data = [
         itemPrice: 929,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum libero voluptates nobis iure fuga minima?",
-        articleNr: "35"
+        articleNr: "34"
     },
     {
         itemHeading: "Stråbärries",
@@ -465,7 +452,7 @@ var data = [
         itemPrice: 1929,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate non esse id, possimus ipsam eveniet! Autem, commodi?",
-        articleNr: "36"
+        articleNr: "35"
     },
     {
         itemHeading: "Glödbarr",
@@ -478,7 +465,7 @@ var data = [
         itemPrice: 299,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate non esse id, possimus ipsam eveniet! Autem, commodi?",
-        articleNr: "37"
+        articleNr: "36"
     },
     {
         itemHeading: "Svanen",
@@ -491,7 +478,7 @@ var data = [
         itemPrice: 599,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Et magni praesentium amet non, officia commodi nulla.",
-        articleNr: "38"
+        articleNr: "37"
     },
     {
         itemHeading: "Blomsterprakt",
@@ -504,7 +491,7 @@ var data = [
         itemPrice: 54,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae voluptate voluptas voluptatum cupiditate, ullam fugiat quaerat!",
-        articleNr: "39"
+        articleNr: "38"
     },
     {
         itemHeading: "Finblommor",
@@ -517,6 +504,6 @@ var data = [
         itemPrice: 54,
         currency: "Kr",
         itemDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero velit exercitationem perferendis, officia facere veniam temporibus recusandae!",
-        articleNr: "40"
+        articleNr: "39"
     }
 ];
