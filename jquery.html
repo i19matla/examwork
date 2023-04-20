@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jquery200.html</title>
+    <title>Pilot study</title>
     <link rel="stylesheet" href="examstyling.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-
-    <script src="01randomizedData200.js"></script> <!-- Variablename datasetOne200; -->
-    <script src="02randomizedData200.js"></script> <!-- Variablename datasetTwo200; -->
+    <script src="jquery3 6 4.js"></script>
+    <script src="measurevuejquery.js"></script>
+    
+    <script src="randomizedOne.js"></script> <!-- Variablename: datasetOne200 -->
+    <script src="randomizedTwo.js"></script> <!-- Variablename: datasetTwo200 -->
 </head>
 <body>
     <header>
@@ -20,47 +21,28 @@
             
         </section>
     </main>
-    <footer>
-
-    </footer>
-    <script src="01randomizedData200.js"></script>
-    <script src="02randomizedData200.js"></script>
     <script>
-        var originalUrl = "http://127.0.0.1:5501/jquery200.html?";
+        const originalUrl = "http://127.0.0.1:5500/jquery200.html?";
         var dataset = [];
         var header;
-        console.log(window.location.href);
-        if (window.location.href == "http://127.0.0.1:5501/jquery200.html") {
-            window.location.href = "http://127.0.0.1:5501/jquery200.html?dataset=datasetOne200";
-        } else {
-            //
-        }
+        // var datasetOne200 imported
+        // var datasetTwo200 imported
+        var amountOfItems = datasetOne200.length;
 
-        const currentUrl = window.location.href;
-        const parametersUrl = new URL(currentUrl).searchParams;
-        const parameters = new URLSearchParams(parametersUrl).values();
-        const urlParameters = Array.from(parameters);
-        console.log(urlParameters);
-
-        if (urlParameters[0] == "datasetOne200") {
-            dataset = datasetOne200;
-            header = "jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett";
-        } else if (urlParameters[0] == "datasetTwo200") {
+        if (window.location.href.search("datasetOne200") == -1) {
             dataset = datasetTwo200;
             header = "jQuery-Dataset-Två | jQuery-Dataset-Två | jQuery-Dataset-Två";
         } else {
-            header = "Något har gått fel.";
+            dataset = datasetOne200;
+            header = "jQuery-Dataset-Ett | jQuery-Dataset-Ett | jQuery-Dataset-Ett";
         }
-
-        // var datasetOne200 imported
-        // var datasetTwo200 imported
-        var amountOfItems = datasetOne200.length;        
         
         $("header").append(`
             <h1 id="overAllHeader">${header}</h1>
             <div id="buttonArea">
                 <button id="buttonSetTwo" onclick="changeToDataSetTwo()">Byt till: Dataset två</button>
                 <button id="buttonSetOne" onclick="changeToDataSetOne()">Byt till: Dataset ett</button>
+                <button onclick="deleteAndRestart()">Töm localstorage och gör ny mätserie</button>
             </div>    
         `);
                 
@@ -82,6 +64,7 @@
                 `
             );
         }
+
         function changeToDataSetTwo() {
             window.location.href = originalUrl + "dataset=datasetTwo200";
         }
@@ -89,7 +72,11 @@
         function changeToDataSetOne() {
             window.location.href = originalUrl + "dataset=datasetOne200";
         }
-        
+
+        function deleteAndRestart() {
+            localStorage.clear();
+            window.location.href = "http://127.0.0.1:5500/jquery200.html";
+        }
     </script>
 </body>
 </html>
