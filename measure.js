@@ -1,51 +1,74 @@
 // ==UserScript==
-// @name     02 Automatic jQuery Mats measure script jQuery Exam
-// @version  1
-// @grant    none
-// @match http://127.0.0.1:5500/vue.html
-// @match http://127.0.0.1:5500/jquery.html
-// @description Render time script
+// @name         jQuery & Vue measure script 200 items
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Measure load and rendertime
+// @author       Mats Läth
+// @match        http://127.0.0.1:5500/jquery200.html
+// @match        http://127.0.0.1:5500/jquery200.html?dataset=datasetOne200
+// @match        http://127.0.0.1:5500/jquery200.html?dataset=datasetTwo200
+// @match        http://127.0.0.1:5500/vue200.html
+// @match        http://127.0.0.1:5500/vue200.html?dataset=datasetOne200
+// @match        http://127.0.0.1:5500/vue200.html?dataset=datasetTwo200
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=0.1
+// @grant        none
 // ==/UserScript==
 
+addEventListener("load", (event) => {
+    var timeAfterLoaded = Date.now();
+    
+    if (localStorage.getItem("readyToRun") == null) {
+        var amountOfMeasurements = 1000;
+        var counter;
+        var datasetOneButtonEle = document.getElementById("buttonSetOne");
+        var datasetTwoButtonEle = document.getElementById("buttonSetTwo");
+        if (window.location.href.search("jquery") == -1) {
+            var activeFrameWork = "Vue";
+        } else {
+            var activeFrameWork = "jQuery";
+        }
 
-const bodyEle = document.getElementsByTagName("body")[0];
+        counterHandler();
+        calculateMeasuredRound();
+        startMeasureRound();
 
-const configuration = {
-    attributes: true,
-    childList: true,
-    subtree: true
-};
-var tamperTimer1 = 0;
-var tamperTimer2 = 0;
-var tamperTimeTotal = 0;
-var tamperCounter = 0;
-var nodesChanged;
-let indexa = 0;
+        function counterHandler() {
+            if (localStorage.getItem("counter") == null) {
+                localStorage.setItem("counter", 0);
+                counter = 0;
+            } else {
+                counter = parseInt(localStorage.getItem("counter"));
+            }
+        }
 
-const callback = (mutationList, listen) => {
-    tamperTimer1 = Date.now();
-    for (const mutation of mutationList) {
-        if (mutation.type === "childList") {
-            //console.log("Added/removed a child node");
-            //console.log(mutation.addedNodes[0]);
-            //console.log(mutation.removedNodes[0]);
-            console.log("xxxxxxxxxxxxxxxRemovedxxxxxxxxxxxxxxxxxxxxx" + mutation.removedNodes.forEach(node => nodesChanged = node));
-            console.log(mutation.addedNodes.forEach(node => nodesChanged = node));
-        } else if (mutation.type === "attributes") {
-            console.log(`The ${mutation.attributeName} attribute was modified.`);
+        function calculateMeasuredRound() {
+            if (counter > 0) {
+                timeThisRound = timeAfterLoaded - parseInt(localStorage.getItem("timeStartLoading" + activeFrameWork + counter));
+                localStorage.setItem(activeFrameWork + "TimeRound" + counter, timeThisRound);
+            }
+        }
+
+        function startMeasureRound() {
+            if (counter < amountOfMeasurements) {
+                if (window.location.href == "http://127.0.0.1:5500/jquery200.html" || window.location.href == "http://127.0.0.1:5500/vue200.html" || window.location.href == "http://127.0.0.1:5500/jquery200.html?dataset=datasetOne200" ||window.location.href == "http://127.0.0.1:5500/vue200.html?dataset=datasetOne200") {
+                    counter++
+                    localStorage.setItem("counter", counter);
+                    localStorage.setItem("timeStartLoading" + activeFrameWork + counter, Date.now());
+                    datasetTwoButtonEle.click();
+                } else {
+                    counter++
+                    localStorage.setItem("counter", counter);
+                    localStorage.setItem("timeStartLoading" + activeFrameWork + counter, Date.now());
+                    datasetOneButtonEle.click();
+                }
+            } else {
+                if (window.location.href.search("jquery") == -1) {
+                    createTextFile();
+                } else {
+                    localStorage.setItem("counter", 0);
+                    alert("Stäng ner webbläsaren, starta om datorn och kör Vue.");
+                }
+            }
         }
     }
-    tamperTimer2 = Date.now();
-    tamperTimeTotal += tamperTimer2-tamperTimer1;
-   // console.log("XXXXXXXXXXXXXXXXXX   Tiden " + tamperTimeTotal);
-   // console.log(tamperCounter);
-    tamperCounter++;
-    if (tamperCounter > 0) {
-        tamperTimeTotal = 0;
-        tamperCounter = 0;
-    }
-};
-
-const listen = new Mutationlisten(callback);
-
-listen.observe(bodyEle, configuration);
+});
