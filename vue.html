@@ -4,97 +4,186 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>01 Vue pilot application</title>
+    <title>07 Vue pilot application</title>
     <link rel="stylesheet" href="examstyling.css">
-    <!-- varför fungerar denna cdn men inte den under denna närmast härunder? -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <!-- <script src="https://unpkg.com/vue-chartjs@3.3.0/dist/vue-chartjs.min.js"></script> -->
-    <!-- Lägg till en Vue  v3.3.0-alpha.4. cdn här -->
-    <!-- VUE VUE VUE VUE VUE VUE VUE VUE VUE -->
 </head>
 <body>
-    <header>
-        <h1>Vue Vue Vue Vue Vue Vue Vue </h1>
-    </header>
-    <main>
-        <section id="webShopApp">
-            <item-in-shop v-for="(component, loopNr) in amountOfComponents" :key="loopNr" :loop-nr="loopNr" />
-        </section>
-    </main>
-    <footer>
-
-    </footer>
-
     <script>
         let minApp = Vue.createApp({
+            template: `
+            <header>
+                <h1 id="overAllHeader">{{ activeHeaderHeading }}</h1>
+                <div id="buttonArea">
+                    <button id="buttonSetTwo" @click="changeToDataSetTwo">Byt till: Dataset två</button>
+                    <button id="randomizeNewOrder" onclick="itemNrRandomizer()">Slumpa fram ny ordning för båda dataseten</button>
+                    <button id="buttonSetOne" @click="changeToDataSetOne()">Byt till: Dataset ett</button>
+                </div>
+            </header>
+            <main>
+                <section id="webShopApp">
+                    <div v-for="(component, loopNr) in amountOfComponents" :key="loopNr">
+                        <div class="itemContainer">
+                            <h2>{{ activeHeading[this.itemNr[loopNr]] }}</h2>
+                            <figure>
+                                <img :src="activeImgSrc[itemNr[loopNr]]" :alt="activeImgAlt[itemNr[loopNr]]" width="200" height="280">
+                                <figcaption>
+                                    {{ activeImgText[itemNr[loopNr]] }}
+                                </figcaption>
+                            </figure>
+                            <p class="price">{{ activePrice[itemNr[loopNr]] }} {{ activeCurrency }}</p>
+                            <p class="itemDescr">{{ activeItemDescription[itemNr[loopNr]] }}</p>
+                            <small class="artNr">Artikel "{{activeDataset}}-{{this.itemNr[loopNr]}}"</small>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer>
+
+            </footer>
+            `,
             data() {
                 return {
                     amountOfComponents: 200,
-                }
-            },
-            components: ["item-in-shop"]
-        });
-
-        minApp.component('pop-up-change-dataset', {
-            
-        });
-
-        minApp.component('item-in-shop', {
-            template: `
-                <div class="itemContainer">
-                    <h2>{{ itemHeading[itemNr] }}</h2>
-                    <figure>
-                        <img :src="imgSrcUrl[itemNr]" :alt="imgAltText[itemNr]" width="200" height="280">
-                        <figcaption>
-                            {{ itemImageText[itemNr] }}
-                        </figcaption>
-                    </figure>
-                    <p class="price">{{ itemPrice[itemNr] }} {{ currency }}</p>
-                    <p class="itemDescr">{{ itemDescription[itemNr] }}</p>
-                </div>
-            `,
-            props: {
-                loopNr: {
-                    type: Number,
-                    required: true,
-                },
-            },
-            data() {
-                return {
-                    itemNr: Number,
-                    itemHeading: ["Plingor","Trädgött", "Strandvått", "Megaflott", "Dammflöde", "Sommar", "Båtliv", "Parfymsniff", "Spadsåg", "Alpspitze"],
-                    imgSrcUrl: ["pictures/plingor.jpg", "pictures/trees.jpg", "pictures/beach.jpg", "pictures/grease.jpg", "pictures/pond.jpg", "pictures/sun.jpg", "pictures/boat.jpg", "pictures/itemimage.jpg", "pictures/sawandspade.jpg", "pictures/alpspitze.jpg"],
-                    imgAltText: ["", "", "", "", "", "", "", "", "Såg och spade hänger på utevägg", ""],
-                    itemImageText: ["Pling pling", "Vackra fina träd", "Bada baden", "Flåttigt", "Odammande damm", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Sikta mot toppen!"],
-                    itemPrice: ["198", "2999", "499", "99", "21", "57", "83", "1005", "99", "4999"],
-                    currency: "Kr",
-                    itemDescription: [
-                        "Fantastiska flaskpumpen, fantastisk som Lorem Ipsum skvandrilljum.",
-                        "Växer sig fina om sommaren, odlas bäst i jorden och vattnas lagom",
+                    headerHeadingOne: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
+                    itemHeadingOne: ["Plingor", "Strandvått", "Megaflott", "Sommar", "Båtliv", "Parfympump", "Spadsåg", "Golvpelare", "Äkta mojäng", "Leksaksratt", "Biltåg", "Leksakshjul", "Fäste", "Kugghjul", "Metallmojäng", "Telefon", "Stuprör", "Vred", "Högtalarpelare", "Ståltrådsmackapär"],
+                    imgSrcUrlOne:  ["pictures/mixed/plingor.jpg", "pictures/mixed/beach.jpg", "pictures/mixed/grease.jpg", "pictures/mixed/sun.jpg", "pictures/mixed/boat.jpg", "pictures/mixed/itemimage.jpg", "pictures/mixed/sawandspade.jpg", "pictures/mixed/floorpillar.jpg", "pictures/mixed/gadgetinsherwood.jpg", "pictures/mixed/toycarsteerwheel.jpg", "pictures/mixed/toytraincar.jpg", "pictures/mixed/toywagonwheel.jpg", "pictures/mixed/attachment.jpg", "pictures/mixed/cogwheel.jpg", "pictures/mixed/metalthing.jpg", "pictures/mixed/oldphone.jpg", "pictures/mixed/pipe.jpg", "pictures/mixed/rustyturnhandle.jpg", "pictures/mixed/speakerthing.jpg", "pictures/mixed/wirething.jpg"],
+                    imgAltTextOne: ["Småklockor hänger från träd", "Bad och strand", "Flottig bacon i närbild", "Solen blänker i havet", "Kanotliknande båt vid brygga", "Tecknad pump för parfym", "Såg och spade hänger på utevägg", "Golvpelare ansluter mot golv", "Rostig grej på marken", "Ratt på en leksaksbil", "Bil liknande leksakståg", "Hjul på leksaksbil", "Rostigt fäste på stolpe", "Rostigt kugghjul", "Metallmojäng, går ej se vad", "Mycket gammal telefon", "Gammalt stuprör", "Gammalt rostigt vred", "Risigt hemmabyggd högtalare på metallstav", "Rostigt vinda för fäste av ståltråd"],
+                    itemImageTextOne: ["Pling pling", "Bada baden", "Flåttigt", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Golv och pelare", "Mojäng av äkta kvalitet", "Lekande sväng med leksaksratt", "Det här går som tåget, utan räls", "Tuffare fälgar finns inte att hitta", "Fäste för bra infästningar", "Kugghjulet som driver det mesta", "Mackapärisk metallmojäng av bästa sort", "Ring ring, slå en singnal", "Leder vatten kalasbra", "Vrid och vred runt", "Spela och dunka musik", "Garanterat bra att ha"],
+                    itemPriceOne: [198, 2999, 499, 99, 21, 57, 83, 1005, 99, 170, 4999, 15, 99, 201, 598, 89, 78, 85, 19, 920],
+                    currencyOne: "Kr",
+                    itemDescriptionOne: [
+                        "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
                         "Varmt på stranden? Svalka dig och ta ett dopp.",
                         "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
-                        "Flödar dammet? Med det här dammflödet kan du påverka de minsta kvalstren.",
                         "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
                         "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
-                        "Lukta gott med en puff av parfymsniff. Luktar godare än de flesta som luktar sämre.",
-                        "En spade och såg i det bästa skicket som går att få. Väl inarbetade.",
-                        "Alptoppar är härligt. Köp en egen alptopp och ha på baksidan av trädgården."
-                    ]
+                        "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
+                        "Ingen med glasögon, men en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, vero quos. Facere atque nostrum velit voluptate.",
+                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam facilis tempora deserunt suscipit ipsam.",
+                        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, ab! Ea maiores ipsum nulla inventore quidem sed blanditiis?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum inventore ullam quo corporis pariatur quam perferendis!",
+                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor culpa itaque nemo voluptate libero animi, error possimus.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, itaque aspernatur impedit placeat nostrum at? Debitis, nemo dolorem.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur exercitationem nam quisquam nisi. Quaerat, pariatur?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit cupiditate ipsa sapiente nihil. Pariatur autem id veniam?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quo, porro totam cumque necessitatibus voluptatum quos modi eaque numquam.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto illo aperiam inventore officiis neque, pariatur molestiae!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse vero quae officiis quidem inventore id incidunt!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, eius magni itaque a voluptatem labore maxime pariatur facere!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos minus tempora assumenda iure. Fugit, modi! Adipisci?"
+                    ],
+                    datasetOne: 1,
+
+                    headerHeadingTwo: 'Vue-Dataset-Två | Vue-Dataset-Två | Vue-Dataset-Två',
+                    itemHeadingTwo: ["Trädtoppar", "Alptoppar", "Damm", "Björkhängen", "Insektsmiddag", "Fågelmat", "Snöskvätta", "Raststolpe", "Utsiktspinne", "Hotell fågelinn", "Skönsångare", "Klätterträd", "Hundboll", "Surt o gött", "Rödfågel", "Sprattelmås", "Flygare", "Fågelrestaurang", "Naturupplevelse", "Skönblomster"],
+                    imgSrcUrlTwo: ["pictures/nature/trees.jpg", "pictures/nature/alpspitze.jpg", "pictures/nature/pond.jpg", "pictures/nature/birchpendants.jpg", "pictures/nature/birdeatinsect.jpg", "pictures/nature/birdfood.jpg", "pictures/nature/birdoneleg.jpg", "pictures/nature/birdonpole.jpg", "pictures/nature/birdonstick.jpg", "pictures/nature/birdsatnest.jpg", "pictures/nature/birdsinger.jpg", "pictures/nature/birdtreeclimb.jpg", "pictures/nature/dogballrunning.jpg", "pictures/nature/lime.jpg", "pictures/nature/redbird.jpg", "pictures/nature/seabirdgroundflight.jpg", "pictures/nature/seagulflight.jpg", "pictures/nature/seagulsonfield.jpg", "pictures/nature/waterfall.jpg", "pictures/nature/yellowwaterflowers.jpg"],
+                    imgAltTextTwo: ["Trädtoppar sträcker sig mot himlen", "Alptoppar", "Damm", "Björkhängen", "Fågel äter insekt", "Larv hänger ut i luften", "Fågel stående på ett ben", "Fågel rastar på en stolpe", "Fågel tittar ut från en kvist", "Fåglar vid sitt bo", "Fågel sjunger för fullt", "Fågel klättrar i träd", "Hund med boll i munnen", "Skuren lime staplat på hög", "Röd fågel sitter på kvist", "Fiskmås i flykten nära marken", "Mås ute och flyger", "Flock av måsar samlade på ett gärde", "Vattenfall", "Gula blommor och gröna blad"],
+                    itemImageTextTwo: ["Trädkrona mot himlen", "Alptoppar i solsken", "Odammig damm", "Gröna björkhängen", "Insekter till middag", "Solande larv", "Snabb i luften, snabb på land", "Fågelstolpe för en bra paus", "Kvist anpassad för utsikt", "Bo med bra utsikt", "Fågelopera, första parkett", "Klätterträd gott nog åt fåglar", "Boll lek", "Gott med en skvätt socker", "Rödfågel, en livsnjutare", "Sprattligaste sprattelmåsen", "Flygtur ovan väg", "Måsbesök på fågelrestaurangen", "Väl värt ett besök", "Välgörande gulblomster"],
+                    itemPriceTwo: [299, 599, 1999, 19, 119, 20, 33, 29, 99, 199, 12, 250, 189, 20, 99, 289, 69, 17, 78, 199],
+                    currencyTwo: "Kr",
+                    itemDescriptionTwo: [
+                        "Trädtoppar mot himlen sträcker sig uppåt i full prakt, köp ett klätterträd.",
+                        "Alptoppar och trädkronor i perfekt semesterkombination till överkomliga priser.",
+                        "Damm helt utan damm, garanterat fri från kvalster. Kvalsterfritt i damm, garanterat. Perfekt till sommaren.",
+                        "Björkhängen för att garantera björkens fortsatta tillväxt. Allergiovänligt men björkvänligt.",
+                        "Småfåglarnas favoriträtt, insekter. Brakmiddag med fin utsikt.",
+                        "Larver perfekta att mata fåglarna i din trädgård. Mättar lika bra som en mask.",
+                        "Supersnabb fågel, springer lika fort på ett ben som den kan flyga. Snabbare än de flesta snabbflygande fåglar.",
+                        "Bekväm och bra fågelstolpe för de bästa pauserna. Lugn och go.",
+                        "Till alla fåglar som älskar att speja efter lunchen med stabil grund på bra höjd.",
+                        "Passar lika bra till kakaduor som gröngölingssångare. Lagom högt över mark, lagom bra.",
+                        "Lyssna till en vacker opera ariang av en underbar skönsångar med toner som hämtade från himlen.",
+                        "Ge dina fåglar en fantastisk plats att klättra runt på. Lika roligt som en flygtur till molnen.",
+                        "Röd boll som är lika go att tugga på för hunden som det bästa hundbenet.",
+                        "Smakar bäst med en nypa socker till. Går att ha i drycken såväl som till maten.",
+                        "Rödfågel, skogens livsnjutare. Njuter mest hela dagen både på kvistar, pinnar och under sina flygturer.",
+                        "Sprattelmås, en udda sort av fiskmås. Utmärkta flygare och luftakrobater med sprattel som specialitet.",
+                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus fugiat rem quas sit, impedit ad!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor aspernatur asperiores quis facere voluptatibus quasi necessitatibus laboriosam!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem facere atque excepturi.",
+                        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit soluta eos odit similique amet!"
+                    ],
+                    datasetTwo: 2,
+
+                    activeHeaderHeading: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
+                    activeHeading: ["Plingor", "Strandvått", "Megaflott", "Sommar", "Båtliv", "Parfympump", "Spadsåg", "Golvpelare", "Äkta mojäng", "Leksaksratt", "Biltåg", "Leksakshjul", "Fäste", "Kugghjul", "Metallmojäng", "Telefon", "Stuprör", "Vred", "Högtalarpelare", "Ståltrådsmackapär"],
+                    activeImgSrc:  ["pictures/mixed/plingor.jpg", "pictures/mixed/beach.jpg", "pictures/mixed/grease.jpg", "pictures/mixed/sun.jpg", "pictures/mixed/boat.jpg", "pictures/mixed/itemimage.jpg", "pictures/mixed/sawandspade.jpg", "pictures/mixed/floorpillar.jpg", "pictures/mixed/gadgetinsherwood.jpg", "pictures/mixed/toycarsteerwheel.jpg", "pictures/mixed/toytraincar.jpg", "pictures/mixed/toywagonwheel.jpg", "pictures/mixed/attachment.jpg", "pictures/mixed/cogwheel.jpg", "pictures/mixed/metalthing.jpg", "pictures/mixed/oldphone.jpg", "pictures/mixed/pipe.jpg", "pictures/mixed/rustyturnhandle.jpg", "pictures/mixed/speakerthing.jpg", "pictures/mixed/wirething.jpg"],
+                    activeImgAlt: ["Småklockor hänger från träd", "Bad och strand", "Flottig bacon i närbild", "Solen blänker i havet", "Kanotliknande båt vid brygga", "Tecknad pump för parfym", "Såg och spade hänger på utevägg", "Golvpelare ansluter mot golv", "Rostig grej på marken", "Ratt på en leksaksbil", "Bil liknande leksakståg", "Hjul på leksaksbil", "Rostigt fäste på stolpe", "Rostigt kugghjul", "Metallmojäng, går ej se vad", "Mycket gammal telefon", "Gammalt stuprör", "Gammalt rostigt vred", "Risigt hemmabyggd högtalare på metallstav", "Rostigt vinda för fäste av ståltråd"],
+                    activeImgText: ["Pling pling", "Bada baden", "Flåttigt", "Sommarsol", "Ta en tur på sjön", "Lukta gott hela dagen", "Gräv och såga, så kul", "Golv och pelare", "Mojäng av äkta kvalitet", "Lekande sväng med leksaksratt", "Det här går som tåget, utan räls", "Tuffare fälgar finns inte att hitta", "Fäste för bra infästningar", "Kugghjulet som driver det mesta", "Mackapärisk metallmojäng av bästa sort", "Ring ring, slå en singnal", "Leder vatten kalasbra", "Vrid och vred runt", "Spela och dunka musik", "Garanterat bra att ha"],
+                    activePrice: [198, 2999, 499, 99, 21, 57, 83, 1005, 99, 170, 4999, 15, 99, 201, 598, 89, 78, 85, 19, 920],
+                    activeCurrency: "Kr",
+                    activeItemDescription: [
+                        "Fantastiska plingan, plingar helt fantastisk. Mycket likt klockan i Mount Bells.",
+                        "Varmt på stranden? Svalka dig och ta ett dopp.",
+                        "Flottigt som den flottigaste bete flott som någonsin skådats. Kanske ännu flottigare.",
+                        "Köp dig en bit av sommaren. Den här biten är extra solig och extra bra.",
+                        "Bra båt, snabbare än alla långsammare båtar du kan hitta.",
+                        "Lukta gott med en puff av pumpparfym. Luktar godare än de flesta som luktar sämre.",
+                        "Ingen med glasögon, men en såg. Och en spade. Spade och såg i det bästa skicket som går att få. Väl inarbetade.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, vero quos. Facere atque nostrum velit voluptate.",
+                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nam facilis tempora deserunt suscipit ipsam.",
+                        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore, ab! Ea maiores ipsum nulla inventore quidem sed blanditiis?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum inventore ullam quo corporis pariatur quam perferendis!",
+                        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor culpa itaque nemo voluptate libero animi, error possimus.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, itaque aspernatur impedit placeat nostrum at? Debitis, nemo dolorem.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci tenetur exercitationem nam quisquam nisi. Quaerat, pariatur?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit cupiditate ipsa sapiente nihil. Pariatur autem id veniam?",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis quo, porro totam cumque necessitatibus voluptatum quos modi eaque numquam.",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque iusto illo aperiam inventore officiis neque, pariatur molestiae!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur esse vero quae officiis quidem inventore id incidunt!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, eius magni itaque a voluptatem labore maxime pariatur facere!",
+                        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos minus tempora assumenda iure. Fugit, modi! Adipisci?"
+                    ],
+                    activeDataset: 1
                 }
             },
             methods: {
                 itemNrRandomizer() {
-                    this.itemNr = Math.floor((Math.random() * 10));
+                    for (let i = 0; i < 200; i++) {
+                        this.itemNr[i] = Math.floor((Math.random() * 10));
+                    }
+                    console.log("New values from parent " + this.itemNr);
                 },
+                changeToDataSetTwo() {
+                    this.activeHeaderHeading = this.headerHeadingTwo;
+                    this.activeHeading = this.itemHeadingTwo;
+                    this.activeImgSrc = this.imgSrcUrlTwo;
+                    this.activeImgAlt = this.imgAltTextTwo;
+                    this.activeImgText = this.itemImageTextTwo;
+                    this.activePrice = this.itemPriceTwo;
+                    this.activeCurrency = this.currencyTwo;
+                    this.activeItemDescription = this.itemDescriptionTwo;
+                    this.activeDataset = this.datasetTwo;
+                },
+                changeToDataSetOne() {
+                    this.activeHeaderHeading = this.headerHeadingOne;
+                    this.activeHeading = this.itemHeadingOne;
+                    this.activeImgSrc = this.imgSrcUrlOne;
+                    this.activeImgAlt = this.imgAltTextOne;
+                    this.activeImgText = this.itemImageTextOne;
+                    this.activePrice = this.itemPriceOne;
+                    this.activeCurrency = this.currencyOne;
+                    this.activeItemDescription = this.itemDescriptionOne;
+                    this.activeDataset = this.datasetOne;
+                }
             },
-            //To call a function in Vue when the page is loading, you can use the created() lifecycle hook. This hook is called when the Vue instance is created,
-            // but before it is mounted to the DOM, making it a good place to initialize data or perform other setup tasks, such as calling a function.
+            beforeCreate() {
+                this.itemNr = [];
+                for (let i = 0; i < 200; i++) {
+                    this.itemNr[i] = Math.floor((Math.random() * 10));
+                }
+                console.log("Values created in parent " + this.itemNr);
+            },
             created() {
-                this.itemNrRandomizer(); // Call the function when the component is created
-            },
+                //
+            }
         });
 
-        minApp.mount('#webShopApp');
+        minApp.mount('body');
+
+
 
     </script>
 </body>
