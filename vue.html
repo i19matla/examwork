@@ -4,22 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>09 Vue pilot application</title>
+    <title>10 Vue pilot application</title>
     <link rel="stylesheet" href="examstyling.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body>
-    <script src="dataset1.js"></script>
-    <script src="dataset2.js"></script>
-    <script src="workingMeasureexperiment.js"></script>
+    
+    <script src="01randomizedData200.js"></script> <!-- Variablename: datasetOne200 -->
+    <script src="02randomizedData200.js"></script> <!-- Variablename: datasetTwo200 -->
     <script>
         let minApp = Vue.createApp({
             template: `
             <header>
                 <h1 id="overAllHeader">{{ activeHeaderHeading }}</h1>
                 <div id="buttonArea">
-                    <button id="buttonSetTwo" @click="changeToDataSetTwo">Byt till: Dataset två</button>
-                    <button id="randomizeNewOrder" onclick="itemNrRandomizer()">Slumpa fram ny ordning för båda dataseten</button>
+                    <button id="buttonSetTwo" @click="changeToDataSetTwo()">Byt till: Dataset två</button>
                     <button id="buttonSetOne" @click="changeToDataSetOne()">Byt till: Dataset ett</button>
                 </div>
             </header>
@@ -27,16 +26,16 @@
                 <section id="webShopApp">
                     <div v-for="(component, loopNr) in amountOfComponents" :key="loopNr">
                         <div class="itemContainer">
-                            <h2>{{ this.data[this.itemNr[loopNr]].itemHeading }}</h2>
+                            <h2>{{ data[loopNr].itemHeading }}</h2>
                             <figure>
-                                <img :src="data[itemNr[loopNr]].image.imgSrcUrl" :alt="data[itemNr[loopNr]].image.imgAltText" :title="data[itemNr[loopNr]].image.itemImageTitle" width="200" height="280">
+                                <img :src="data[loopNr].image.imgSrcUrl" :alt="data[loopNr].image.imgAltText" :title="data[loopNr].image.itemImageTitle" width="200" height="280">
                                 <figcaption>
-                                    {{ data[itemNr[loopNr]].image.itemImageText }}
+                                    {{ data[loopNr].image.itemImageText }}
                                 </figcaption>
                             </figure>
-                            <p class="price">{{ data[itemNr[loopNr]].itemPrice }} {{ data[itemNr[loopNr]].currency }}</p>
-                            <p class="itemDescr">{{ data[itemNr[loopNr]].itemDescription }}</p>
-                            <small class="artNr">Artikel "{{ data[itemNr[loopNr]].articleNr }}"</small>
+                            <p class="price">{{ data[loopNr].itemPrice }} {{ data[loopNr].currency }}</p>
+                            <p class="itemDescr">{{ data[loopNr].itemDescription }}</p>
+                            <small class="artNr">Artikel "{{ data[loopNr].articleNr }}"</small>
                         </div>
                     </div>
                 </section>
@@ -47,35 +46,33 @@
             `,
             data() {
                 return {
-                    amountOfComponents: 1000,
-                    headerHeadingOne: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
-                    headerHeadingTwo: 'Vue-Dataset-Två | Vue-Dataset-Två | Vue-Dataset-Två',
-                    activeHeaderHeading: 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett',
-                    data: datasetOne,
+                    amountOfComponents: this.theLength,
+                    activeHeaderHeading: this.activeHeaderHeading,
+                    data: this.theDataSet,
                 }
             },
             methods: {
-                itemNrRandomizer() {
-                    for (let i = 0; i < 1000; i++) {
-                        this.itemNr[i] = Math.floor((Math.random() * 10));
-                    }
-                    console.log("Nya värden från parent " + this.itemNr);
-                },
                 changeToDataSetTwo() {
-                    this.data = datasetTwo;
-                    this.activeHeaderHeading = this.headerHeadingTwo;
+                    localStorage.setItem("vueTimeOne", Date.now());
+                    window.location.href = "http://127.0.0.1:5501/vue200.html?dataset=datasetTwo200";
                 },
                 changeToDataSetOne() {
-                    this.data = datasetOne;
-                    this.activeHeaderHeading = this.headerHeadingOne;
+                    localStorage.setItem("vueTimeOne", Date.now());
+                    window.location.href = "http://127.0.0.1:5501/vue200.html?dataset=datasetOne200";
                 }
             },
             beforeCreate() {
-                this.itemNr = [];
-                for (let i = 0; i < 1000; i++) {
-                    this.itemNr[i] = Math.floor((Math.random() * 20));
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                const parameters = Object.fromEntries(urlSearchParams.entries());
+                console.log(parameters.dataset);
+                if (window.location.href == "http://127.0.0.1:5501/vue200.html" || window.location.href == "http://127.0.0.1:5501/vue200.html?dataset=datasetOne200") {
+                    this.activeHeaderHeading = 'Vue-Dataset-Ett | Vue-Dataset-Ett | Vue-Dataset-Ett';
+                    this.theDataSet = datasetOne200;
+               } else if (window.location.href == "http://127.0.0.1:5501/vue200.html?dataset=datasetTwo200") {
+                    this.activeHeaderHeading = 'Vue-Dataset-Två | Vue-Dataset-Två | Vue-Dataset-Två';
+                    this.theDataSet = datasetTwo200;
                 }
-                localStorage.setItem("timeBeforCreate", Date.now());
+                this.theLength = datasetOne200.length;
             },
             created() {
                 //
