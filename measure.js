@@ -4,12 +4,6 @@
 // @version      0.1
 // @description  Measure load and rendertime
 // @author       Mats Läth
-// @match        http://127.0.0.1:5500/jquery200.html
-// @match        http://127.0.0.1:5500/jquery200.html?dataset=datasetOne200
-// @match        http://127.0.0.1:5500/jquery200.html?dataset=datasetTwo200
-// @match        http://127.0.0.1:5500/vue200.html
-// @match        http://127.0.0.1:5500/vue200.html?dataset=datasetOne200
-// @match        http://127.0.0.1:5500/vue200.html?dataset=datasetTwo200
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=0.1
 // @grant        none
 // ==/UserScript==
@@ -50,7 +44,7 @@ addEventListener("load", (event) => {
 
         function startMeasureRound() {
             if (counter < amountOfMeasurements) {
-                if (window.location.href == "http://127.0.0.1:5500/jquery200.html" || window.location.href == "http://127.0.0.1:5500/vue200.html" || window.location.href == "http://127.0.0.1:5500/jquery200.html?dataset=datasetOne200" ||window.location.href == "http://127.0.0.1:5500/vue200.html?dataset=datasetOne200") {
+                if (window.location.href == "file:///C:/Users/Mats/Desktop/Examensarbetet/02%20Inl%C3%A4mning%202%20Pilotstudie/07%20pilotstudien%20klar%20-%20UTAN%20vs%20code%20liveserver/jquery.html" || window.location.href == "file:///C:/Users/Mats/Desktop/Examensarbetet/02%20Inl%C3%A4mning%202%20Pilotstudie/07%20pilotstudien%20klar%20-%20UTAN%20vs%20code%20liveserver/vue.html" || window.location.href == "file:///C:/Users/Mats/Desktop/Examensarbetet/02%20Inl%C3%A4mning%202%20Pilotstudie/07%20pilotstudien%20klar%20-%20UTAN%20vs%20code%20liveserver/jquery.html?dataset=datasetOne200" ||window.location.href == "file:///C:/Users/Mats/Desktop/Examensarbetet/02%20Inl%C3%A4mning%202%20Pilotstudie/07%20pilotstudien%20klar%20-%20UTAN%20vs%20code%20liveserver/vue.html?dataset=datasetOne200") {
                     counter++
                     localStorage.setItem("counter", counter);
                     localStorage.setItem("timeStartLoading" + activeFrameWork + counter, Date.now());
@@ -75,14 +69,15 @@ addEventListener("load", (event) => {
             localStorage.setItem("readyToRun", "no");
             var jQueryAverage = 0;
             var vueAverage = 0;
-            /* // Human readable
-            let measurePoints = "jQuery      Vue\n";
+            // Human readable
+            /*let measurePoints = "jQuery      Vue\n";
             for (let i = 1; i < amountOfMeasurements + 1; i++) {
                 measurePoints += localStorage.getItem("jQueryTimeRound" + i) + "         " + localStorage.getItem("VueTimeRound" + i) + "\n";
                 jQueryAverage += parseInt(localStorage.getItem("jQueryTimeRound" + i));
                 vueAverage += parseInt(localStorage.getItem("VueTimeRound" + i));
             }
-            var writeToFile = "Average:     Average:\n" + (jQueryAverage / amountOfMeasurements) + "        "  + (vueAverage / amountOfMeasurements) + "\n" + measurePoints; */
+            var writeToFile = "Average:     Average:\n" + (jQueryAverage / amountOfMeasurements) + "        "  + (vueAverage / amountOfMeasurements) + "\n" + measurePoints;
+            */
             // For Python
             let measurePoints = "";
             for (let i = 1; i < amountOfMeasurements + 1; i++) {
